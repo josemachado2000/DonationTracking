@@ -1,0 +1,33 @@
+{
+  "name": "donationtracking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {},
+  "keywords": [
+    "sawtooth",
+    "hyperledger",
+    "donationTracking"
+  ],
+  "author": "José Machado, Paulo Macedo",
+  "license": "ISC",
+  "bugs": {},
+  "homepage": "",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cbor": "^5.0.1",
+    "express": "^4.17.1",
+    "mocha": "^8.4.0",
+    "standard": "^16.0.3",
+    "underscore": "^1.13.1",
+    "zeromq": "^5.2.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
