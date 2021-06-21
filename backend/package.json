@@ -23,6 +23,7 @@
     "cbor": "^5.0.1",
     "express": "^4.17.1",
     "mocha": "^8.4.0",
+    "sawtooth-sdk": "^1.0.5",
     "standard": "^16.0.3",
     "underscore": "^1.13.1",
     "zeromq": "^5.2.8"
