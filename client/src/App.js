@@ -1,11 +1,11 @@
 import { BrowserRouter, Route } from "react-router-dom";
-import Home from "./components/Home";
+import Events from "./components/Events/Events";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Events} />
       </BrowserRouter>
     </div>
   );

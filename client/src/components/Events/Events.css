@@ -1,0 +1,44 @@
+/* Event List */
+.eventsList {
+  width: 100%;
+}
+/* Event-EventDetails */
+.event_eventDetails {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowwrap;
+}
+/* Event Details */
+.eventDetails {
+  width: 60%;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event */
+.event {
+  width: 40%;
+  margin: 20px;
+}
+
+/* Event Card */
+.cardTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+.cardButton {
+  float: right;
+}
+
+.form-group.col,
+.form-group.row {
+  margin-bottom: 0px;
+}
+.form-label.col-form-label.col-sm-10 {
+  padding-bottom: 0px;
+}
+.btn.btn-primary {
+  margin-top: 10px;
+  float: right;
+}

@@ -1,7 +1,11 @@
 import { useState, useEffect, React } from "react";
+
+import "./Events.css";
+
+import NavBar from "../NavBar/NavBar";
 import Event from "./Event";
 
-const EventsList = () => {
+const Events = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -18,14 +22,17 @@ const EventsList = () => {
     return data;
   };
 
-  console.log(events);
   return (
-    <div style={{ width: "800px", margin: "auto", marginTop: "200px" }}>
-      {events.map((event) => (
-        <Event key={event.id} event={event} />
-      ))}
-    </div>
+    <>
+      <NavBar />
+      <div className="eventsList">
+        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Events</h3>
+        {events.map((event) => (
+          <Event key={event.id} event={event} />
+        ))}
+      </div>
+    </>
   );
 };
 
-export default EventsList;
+export default Events;
