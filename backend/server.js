@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -449,7 +451,7 @@ app.get("/get_BENEFITS_by_BENEF", async (req, res) => {
 
 //TODO: ANONYMOUS/DONOR ENDPOINTS
 //Get Solidarity Institutions
-app.get("/get_all_SOLINST", async (req, res) => {
+app.get("/get_all_SOLINSTS", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -535,7 +537,7 @@ app.get("/get_all_EVENTS", async (req, res) => {
 });
 
 //Get Events by Solidarity Institution by Id
-app.get("/get_EVENTS_by_SOLINST", async (req, res) => {
+app.post("/get_EVENTS_by_SOLINST", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -816,8 +818,12 @@ app.post("/create_SOLINST", async (req, res) => {
 
   const payload = {
     id: uuidv4(),
-    products: ["1kg arroz", "2kg massa", "1 lata de atum"],
-    amount: 854.9,
+    username: req.body.username,
+    password: req.body.password,
+    name: req.body.name,
+    address: req.body.address,
+    email: req.body.email,
+    contact: req.body.contact,
     dataType: {
       type: "SOLINST",
       subType: "SOLINST",
@@ -1221,18 +1227,17 @@ app.post("/create_INVOICE", async (req, res) => {
 
 //TODO: MIS ENDPOINTS
 //Create Event
-app.get("/create_EVENT", async (req, res) => {
+app.post("/create_EVENT", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
     id: uuidv4(),
-    name: "Angariação de 5000€ para uma cadeira de rodas",
-    description:
-      "Angariação de 5000€ para uma cadeira de rodas para um adolescente de 12 anos com problema de locomoção",
-    targetReason: "Problema de locomoção",
-    targetAmount: 5000.0,
-    beginDate: Date(Date.now()),
-    endDate: "25/07/2021",
+    name: req.body.name,
+    description: req.body.description,
+    targetReason: req.body.targetReason,
+    targetAmount: req.body.targetAmount,
+    beginDate: req.body.beginDate,
+    endDate: req.body.endDate,
     dataType: {
       type: "EVENT",
       subType: "EVENT",

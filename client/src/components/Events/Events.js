@@ -2,8 +2,8 @@ import { useState, useEffect, React } from "react";
 
 import "./Events.css";
 
-import NavBar from "../NavBar/NavBar";
 import Event from "./Event";
+import axios from "axios";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -17,14 +17,12 @@ const Events = () => {
   }, []);
 
   const fetchEvents = async () => {
-    const response = await fetch("http://localhost:8080/get_all_EVENTS");
-    const data = await response.json();
-    return data;
+    const response = await axios.get("http://localhost:8080/get_all_EVENTS");
+    return response.data;
   };
 
   return (
     <>
-      <NavBar />
       <div className="eventsList">
         <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Events</h3>
         {events.map((event) => (

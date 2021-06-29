@@ -12,7 +12,10 @@ const NavBar = () => {
       <Navbar bg="primary" variant="dark">
         <Navbar.Brand href="/">Donation Tracking</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="/">Events</Nav.Link>
+          <Nav.Link href="/events">Events</Nav.Link>
+          <Nav.Link href="/solidarity_institutions">
+            Solidarity Institutions
+          </Nav.Link>
           {/* <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
         </Nav>
