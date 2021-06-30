@@ -1,6 +1,9 @@
 import { useState, useEffect, React } from "react";
 import axios from "axios";
 
+import MisEvent from "./MisEvent";
+
+
 const MisEvents = ({ mis }) => {
   const [events, setEvents] = useState([]);
 
@@ -22,13 +25,15 @@ const MisEvents = ({ mis }) => {
   };
 
   return (
-    <div>
+    <>
       {events.map((event) => (
-        <div key={event.id}>
-          <h6>{event.name}</h6>
-        </div>
+        <MisEvent
+          key={event.id}
+          event={event}
+          component={"MisEvents.js"}
+        />
       ))}
-    </div>
+    </>
   );
 };
 
