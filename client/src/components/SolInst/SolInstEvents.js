@@ -1,5 +1,8 @@
 import { useState, useEffect, React } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
+
+import SolInstEvent from "./SolInstEvent";
 
 const SolInstEvents = ({ solInst }) => {
   const [events, setEvents] = useState([]);
@@ -22,13 +25,15 @@ const SolInstEvents = ({ solInst }) => {
   };
 
   return (
-    <div>
+    <>
       {events.map((event) => (
-        <div key={event.id}>
-          <h6>{event.name}</h6>
-        </div>
+        <SolInstEvent
+          key={event.id}
+          event={event}
+          component={"SolInstEvents.js"}
+        />
       ))}
-    </div>
+    </>
   );
 };
 

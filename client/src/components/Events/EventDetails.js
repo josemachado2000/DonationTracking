@@ -9,14 +9,18 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const EventDetails = ({ event }) => {
+const EventDetails = ({ event, component }) => {
   const onClickDonate = (e) => {
     e.preventDefault();
     console.log(e);
   };
 
   return (
-    <div className="eventDetails">
+    <div
+      className={`${
+        component === "Event.js" ? "eventDetails" : "solInst_eventDetails"
+      }`}
+    >
       <Form>
         <Form.Group as={Row}>
           <Form.Label column sm="2" style={{ fontWeight: "bold" }}>

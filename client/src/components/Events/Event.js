@@ -39,7 +39,10 @@ const Event = ({ event }) => {
             </Card.Body>
           </Card>
         </div>
-        <Route path="/donate" render={() => <EventDetails event={event} />} />
+        <Route
+          path="/donate"
+          render={() => <EventDetails event={event} component={"Event.js"} />}
+        />
       </div>
     </Router>
   );
