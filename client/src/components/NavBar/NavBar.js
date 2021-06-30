@@ -16,6 +16,9 @@ const NavBar = () => {
           <Nav.Link href="/solidarity_institutions">
             Solidarity Institutions
           </Nav.Link>
+          <Nav.Link href="/mis">
+          Member of Institution of Solidarity
+          </Nav.Link>
           {/* <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
         </Nav>

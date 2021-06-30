@@ -582,6 +582,52 @@ app.post("/get_EVENTS_by_SOLINST", async (req, res) => {
     });
 });
 
+//Get Events by Mis by Id
+app.post("/get_EVENTS_by_MIS", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.type === "EVENT" &&
+            decodedPayload.misId === req.body.misId
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //Get Event by id
 app.get("/get_EVENT_by_Id", async (req, res) => {
   axios
