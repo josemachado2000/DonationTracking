@@ -356,6 +356,49 @@ app.get("/get_all_MIS", async (req, res) => {
     });
 });
 
+//Get all BENEF
+app.get("/get_all_BENEF", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.subType === "BENEF") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //Get Invoices by Supplco Id
 app.get("/get_INVOICES_by_SUPPLCO", async (req, res) => {
   axios
@@ -404,7 +447,7 @@ app.get("/get_INVOICES_by_SUPPLCO", async (req, res) => {
 
 //TODO: BENEF ENDPOINTS
 //Get Benefits
-app.get("/get_BENEFITS_by_BENEF", async (req, res) => {
+app.post("/get_BENEFITS_by_BENEF", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -519,6 +562,49 @@ app.get("/get_all_EVENTS", async (req, res) => {
           decodedPayload = JSON.parse(decodedPayload);
 
           if (decodedPayload.dataType.type === "EVENT") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//Get Benefits
+app.get("/get_all_BENEFITS", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.type === "BENEFIT") {
             resPayloads.push(decodedPayload);
           }
         }
@@ -1290,6 +1376,96 @@ app.post("/create_EVENT", async (req, res) => {
     },
     misId: req.body.misId,
     solInstId: req.body.solInstId,
+  };
+
+  // Input for one transaction
+  const payloadBytes = Buffer.from(JSON.stringify(payload));
+
+  // Output we created with this transaction input
+
+  const transactionHeaderBytes = protobuf.TransactionHeader.encode({
+    familyName: TP_FAMILY,
+    familyVersion: TP_VERSION,
+    // Needs to be same as the expected address we create in contract
+    // If diffrent we wont get access to put state and get state of the address
+    inputs: [address],
+    outputs: [address],
+    signerPublicKey: signer.getPublicKey().asHex(),
+    batcherPublicKey: signer.getPublicKey().asHex(),
+    dependencies: [],
+    payloadSha512: createHash("sha512").update(payloadBytes).digest("hex"),
+  }).finish();
+
+  const signature = signer.sign(transactionHeaderBytes);
+
+  // Sign the transaction
+  const transaction = protobuf.Transaction.create({
+    header: transactionHeaderBytes,
+    headerSignature: signature,
+    payload: payloadBytes,
+  });
+
+  // Wrap it into list of transaction
+  const transactions = [transaction];
+
+  const batchHeaderBytes = protobuf.BatchHeader.encode({
+    signerPublicKey: signer.getPublicKey().asHex(),
+    transactionIds: transactions.map((txn) => txn.headerSignature),
+  }).finish();
+
+  // Wrap the transaction list into batch
+  const batchSignature = signer.sign(batchHeaderBytes);
+
+  // And sign it
+  const batch = protobuf.Batch.create({
+    header: batchHeaderBytes,
+    headerSignature: batchSignature,
+    transactions: transactions,
+  });
+
+  // Wrap them in batch list
+  const batchListBytes = protobuf.BatchList.encode({
+    batches: [batch],
+  }).finish();
+  axios
+    .post(`${API_URL}/batches`, batchListBytes, {
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+    .then((response) => {
+      console.log({
+        address,
+        TP_NAMESPACE,
+      });
+      console.log(response.data);
+
+      res.send({
+        message: "submitted",
+        data: response.data,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send({
+        message: "submitted",
+        error: error.response.data,
+      });
+    });
+});
+
+//Create BENEFITS
+app.post("/create_BENEFITS", async (req, res) => {
+  let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
+
+  const payload = {
+    id: uuidv4(),
+    date: req.body.date,
+    description: req.body.description,
+    value: req.body.value,
+    dataType: {
+      type: "BENEFIT",
+      subType: "BENEFIT",
+    },
+    benefId: req.body.benefId,
   };
 
   // Input for one transaction
