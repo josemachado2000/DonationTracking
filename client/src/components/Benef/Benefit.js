@@ -1,11 +1,8 @@
-import { React, useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 
 const Benefit = ({ benefit }) => {
-
-    console.log(benefit)
   return (
     <Router>
       <div className="benefit_benefitDetails">

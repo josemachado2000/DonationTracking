@@ -1,60 +1,59 @@
 /* Event List */
 .benefitList {
-    width: 100%;
-  }
-  /* Event-EventDetails */
-  .benefit_benefitDetails {
-    width: 100%;
-    display: flex;
-    flex-wrap: nowwrap;
-  }
-  /* Event Details */
-  .benefitDetails {
-    width: 60%;
-    margin-top: 20px;
-    margin-right: 20px;
-    padding: 20px;
-    background-color: lightgray;
-  }
-  /* Event Details */
-  .benef_benefitDetails {
-    width: 100%;
-    padding: 20px;
-    background-color: lightgray;
-  }
-  /* Event */
-  .benefit {
-    width: 36%;
-    margin: 20px;
-  }
-  
-  /* Event Card */
-  .cardTitle {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .cardButton {
-    float: right;
-  }
-  
-  .form-group.col,
-  .form-group.row {
-    margin-bottom: 0px;
-  }
-  .form-label.col-form-label.col-sm-10 {
-    padding-bottom: 0px;
-  }
-  .btn.btn-primary {
-    margin-top: 10px;
-    float: right;
-  }
-  
+  width: 100%;
+}
+/* Event-EventDetails */
+.benefit_benefitDetails {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowwrap;
+}
+/* Event Details */
+.benefitDetails {
+  width: 60%;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event Details */
+.benef_benefitDetails {
+  width: 100%;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event */
+.benefit {
+  width: 36%;
+  margin: 20px;
+}
+
+/* Event Card */
+.cardTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+.cardButton {
+  float: right;
+}
+
+.form-group.col,
+.form-group.row {
+  margin-bottom: 0px;
+}
+.form-label.col-form-label.col-sm-10 {
+  padding-bottom: 0px;
+}
+.btn.btn-primary {
+  margin-top: 10px;
+  float: right;
+}
 
 .benef {
-    width: 100%;
-    padding: 20px;
-  }
+  width: 100%;
+  padding: 20px;
+}
 .benef-benefit {
-    padding: 20px;
-    padding-top: 0px;
+  padding: 20px;
+  padding-top: 0px;
 }

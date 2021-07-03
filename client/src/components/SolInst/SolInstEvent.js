@@ -10,42 +10,44 @@ const SolInstEvent = ({ event }) => {
   const [showSolInstEvent, setShowSolInstEvent] = useState(false);
 
   return (
-    <div className="solInsts-events">
-      <Card>
-        <Card.Header className="cardTitle">
-          {event.name}
-          {showSolInstEvent === false ? (
-            <div className="cardButton">
-              <Link
-                to="/solidarity_institutions/events/event"
-                className="btn btn-primary"
-                onClick={() => setShowSolInstEvent(!showSolInstEvent)}
-              >
-                Mostrar
-              </Link>
-            </div>
+    <Router>
+      <div className="solInsts-events">
+        <Card>
+          <Card.Header className="cardTitle">
+            {event.name}
+            {showSolInstEvent === false ? (
+              <div className="cardButton">
+                <Link
+                  to="/solidarity_institutions/events/event"
+                  className="btn btn-primary"
+                  onClick={() => setShowSolInstEvent(!showSolInstEvent)}
+                >
+                  Mostrar
+                </Link>
+              </div>
+            ) : (
+              <div className="cardButton">
+                <Link
+                  to="/solidarity_institutions/events"
+                  className="btn btn-primary"
+                  onClick={() => setShowSolInstEvent(!showSolInstEvent)}
+                >
+                  Fechar
+                </Link>
+              </div>
+            )}
+          </Card.Header>
+          {showSolInstEvent ? (
+            <Route
+              path="/solidarity_institutions/events/event"
+              render={() => <EventDetails event={event} />}
+            />
           ) : (
-            <div className="cardButton">
-              <Link
-                to="/solidarity_institutions/events"
-                className="btn btn-primary"
-                onClick={() => setShowSolInstEvent(!showSolInstEvent)}
-              >
-                Fechar
-              </Link>
-            </div>
+            ""
           )}
-        </Card.Header>
-        {showSolInstEvent ? (
-          <Route
-            path="/solidarity_institutions/events/event"
-            render={() => <EventDetails event={event} />}
-          />
-        ) : (
-          ""
-        )}
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </Router>
   );
 };
 

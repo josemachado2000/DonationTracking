@@ -1,4 +1,4 @@
-import { useState, React } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "./SolInst.css";

@@ -10,42 +10,46 @@ const MisEvent = ({ event }) => {
   const [showMisEvent, setMistEvent] = useState(false);
 
   return (
-    <div className="mis-events">
-      <Card>
-        <Card.Header className="cardTitle">
-          {event.name}
-          {showMisEvent === false ? (
-            <div className="cardButton">
-              <Link
-                to="/mis/events/event"
-                className="btn btn-primary"
-                onClick={() => setMistEvent(!showMisEvent)}
-              >
-                Mostrar
-              </Link>
-            </div>
+    <Router>
+      <div className="mis-events">
+        <Card>
+          <Card.Header className="cardTitle">
+            {event.name}
+            {showMisEvent === false ? (
+              <div className="cardButton">
+                <Link
+                  to="/mis/events/event"
+                  className="btn btn-primary"
+                  onClick={() => setMistEvent(!showMisEvent)}
+                >
+                  Mostrar
+                </Link>
+              </div>
+            ) : (
+              <div className="cardButton">
+                <Link
+                  to="/mis/events"
+                  className="btn btn-primary"
+                  onClick={() => setMistEvent(!showMisEvent)}
+                >
+                  Fechar
+                </Link>
+              </div>
+            )}
+          </Card.Header>
+          {showMisEvent ? (
+            <Route
+              path="/mis/events/event"
+              render={() => (
+                <EventDetails event={event} component={"MisEvents.js"} />
+              )}
+            />
           ) : (
-            <div className="cardButton">
-              <Link
-                to="/mis/events"
-                className="btn btn-primary"
-                onClick={() => setMistEvent(!showMisEvent)}
-              >
-                Fechar
-              </Link>
-            </div>
+            ""
           )}
-        </Card.Header>
-        {showMisEvent ? (
-          <Route
-            path="/mis/events/event"
-            render={() => <EventDetails event={event} />}
-          />
-        ) : (
-          ""
-        )}
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </Router>
   );
 };
 
