@@ -2,6 +2,12 @@ import { React, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
+import {
+  faChevronCircleRight,
+  faChevronCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import EventDetails from "./EventDetails";
 
 const Event = ({ event }) => {
@@ -17,22 +23,22 @@ const Event = ({ event }) => {
               <Card.Text>{event.description}</Card.Text>
               {showDonate === false ? (
                 <div className="cardButton">
-                  <Link
-                    to="/donate"
-                    className="btn btn-primary"
-                    onClick={() => setShowDonate(!showDonate)}
-                  >
-                    Donate
+                  <Link to="/donate" onClick={() => setShowDonate(!showDonate)}>
+                    <FontAwesomeIcon
+                      icon={faChevronCircleRight}
+                      size="lg"
+                      style={{ color: "gray" }}
+                    />
                   </Link>
                 </div>
               ) : (
                 <div className="cardButton">
-                  <Link
-                    to="/"
-                    className="btn btn-primary"
-                    onClick={() => setShowDonate(!showDonate)}
-                  >
-                    Fechar
+                  <Link to="/" onClick={() => setShowDonate(!showDonate)}>
+                    <FontAwesomeIcon
+                      icon={faChevronCircleLeft}
+                      size="lg"
+                      style={{ color: "gray" }}
+                    />
                   </Link>
                 </div>
               )}
