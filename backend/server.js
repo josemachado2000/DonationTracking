@@ -1364,10 +1364,12 @@ app.post("/create_EVENT", async (req, res) => {
 
   const payload = {
     id: uuidv4(),
+    oldId: req.body.oldId,
     name: req.body.name,
     description: req.body.description,
     targetReason: req.body.targetReason,
     targetAmount: req.body.targetAmount,
+    currentAmount: req.body.currentAmount,
     beginDate: req.body.beginDate,
     endDate: req.body.endDate,
     dataType: {

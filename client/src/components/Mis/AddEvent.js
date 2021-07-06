@@ -16,7 +16,7 @@ const AddEvent = ({ mis, onAddEvent }) => {
   const [endDate, setEndDate] = useState(new Date());
 
   const addEvent = () => {
-    if (!name && !description && !targetReason && !targetAmount) {
+    if (!name || !description || !targetReason || !targetAmount) {
       alert("Empty fields!");
       return;
     }

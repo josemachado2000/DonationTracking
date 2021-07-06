@@ -85,3 +85,8 @@
   right: 0;
   width: fit-content;
 }
+
+input {
+  border: 0 !important;
+  background-color: lightgray;
+}
