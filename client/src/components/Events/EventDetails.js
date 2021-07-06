@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import Donate from "../Donations/Donate";
 
 import "./Events.css";
@@ -7,12 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const EventDetails = ({ event, component }) => {
-  // const onClickDonate = (e) => {
-  //   e.preventDefault();
-  //   console.log(e);
-  // };
-
+const EventDetails = ({ event, component, onDonateSuccess }) => {
   return (
     <div
       className={`${
@@ -90,12 +83,8 @@ const EventDetails = ({ event, component }) => {
       {component === "MisEvents.js" ? (
         ""
       ) : (
-        <Link to="/create_donate" component={Donate} />
+        <Donate event={event} onDonateSuccess={onDonateSuccess} />
       )}
-
-      {/* <Button type="submit" onClick={(e) => onClickDonate(e)}>
-        Donate
-      </Button> */}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -9,48 +10,82 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Donate = () => {
+const Donate = ({ event, onDonateSuccess }) => {
   const [showDonate, setShowDonate] = useState(false);
-  const [amount, setAmount] = useState(0.0);
+  const [amount, setAmount] = useState(0);
   const [donateClick, setDonateClick] = useState("");
-  console.log(amount);
 
   const onClickDonate = () => {
     if (showDonate === false) {
       setShowDonate(true);
       return;
     } else {
-      alert("DONATE");
+      const date = new Date();
+      const dateformatted =
+        [date.getMonth() + 1, date.getDate(), date.getFullYear()].join("/") +
+        " " +
+        [date.getHours(), date.getMinutes(), date.getSeconds()].join(":");
+
+      console.log(dateformatted + " --> " + amount);
+      if (amount === 0) {
+        alert("Select donation value");
+      } else {
+        createDonation(amount, dateformatted);
+      }
+    }
+  };
+
+  const alert = (showAlert) => {
+    onDonateSuccess(showAlert);
+  };
+
+  const createDonation = async (amount, date) => {
+    const newDonation = {
+      amount: amount,
+      date: date,
+      eventId: event.id,
+    };
+    try {
+      await axios.post("http://localhost:8080/create_DONATION", newDonation);
+
+      setDonateClick("");
+      setAmount(0);
+      setShowDonate(false);
+      alert(true);
+      setTimeout(function () {
+        alert(false);
+      }, 3000);
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const onClickCloseDonate = () => {
+    setDonateClick("");
+    setAmount(0);
     setShowDonate(false);
   };
 
-  const onDonateClick = (value) => {
-    if (!donateClick) {
-      switch (value) {
-        case 1:
-          setDonateClick("div_1€");
-          break;
-        case 5:
-          setDonateClick("div_5€");
-          break;
-        case 10:
-          setDonateClick("div_10€");
-          break;
-        case 50:
-          setDonateClick("div_50€");
-          break;
-        default:
-          setDonateClick("");
-      }
-      setAmount(value);
-    } else {
-      setDonateClick("");
-      setAmount(0.0);
+  const onValueClick = (value) => {
+    setDonateClick("");
+    setAmount(0);
+    switch (value) {
+      case 1:
+        setDonateClick("div_1€");
+        break;
+      case 5:
+        setDonateClick("div_5€");
+        break;
+      case 10:
+        setDonateClick("div_10€");
+        break;
+      case 50:
+        setDonateClick("div_50€");
+        break;
+      default:
+        setDonateClick("");
     }
+    setAmount(value);
   };
 
   return (
@@ -84,48 +119,52 @@ const Donate = () => {
                       ? "donateValueClicked"
                       : "donateValue"
                   }
-                  onClick={() => onDonateClick(1)}
+                  onClick={() => onValueClick(1)}
                 >
                   1 €
                 </div>
+
                 <div
                   className={
                     donateClick === "div_5€"
                       ? "donateValueClicked"
                       : "donateValue"
                   }
-                  onClick={() => onDonateClick(5)}
+                  onClick={() => onValueClick(5)}
                 >
                   5 €
                 </div>
+
                 <div
                   className={
                     donateClick === "div_10€"
                       ? "donateValueClicked"
                       : "donateValue"
                   }
-                  onClick={() => onDonateClick(10)}
+                  onClick={() => onValueClick(10)}
                 >
                   10 €
                 </div>
+
                 <div
                   className={
                     donateClick === "div_50€"
                       ? "donateValueClicked"
                       : "donateValue"
                   }
-                  onClick={() => onDonateClick(50)}
+                  onClick={() => onValueClick(50)}
                 >
                   50 €
                 </div>
-                <div>
-                  Other value
+
+                <div style={{ display: "flex" }}>
                   <Form.Control
                     type="number"
                     placeholder="0"
-                    onChange={(e) => onDonateClick(e.target.value)}
+                    onChange={(e) => onValueClick(parseInt(e.target.value))}
+                    style={{ width: "40%" }}
                   />
-                  <InputGroup.Text>€</InputGroup.Text>
+                  <InputGroup.Text style={{ width: "15%" }}>€</InputGroup.Text>
                 </div>
               </Col>
             </Form.Group>

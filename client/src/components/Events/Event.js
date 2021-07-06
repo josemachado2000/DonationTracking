@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EventDetails from "./EventDetails";
 
-const Event = ({ event }) => {
+const Event = ({ event, onDonateSuccess }) => {
   const [showDonate, setShowDonate] = useState(false);
 
   return (
@@ -47,7 +47,13 @@ const Event = ({ event }) => {
         </div>
         <Route
           path="/donate"
-          render={() => <EventDetails event={event} component={"Event.js"} />}
+          render={() => (
+            <EventDetails
+              event={event}
+              component={"Event.js"}
+              onDonateSuccess={onDonateSuccess}
+            />
+          )}
         />
       </div>
     </Router>
