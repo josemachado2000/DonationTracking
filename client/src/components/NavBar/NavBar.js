@@ -19,12 +19,11 @@ const NavBar = () => {
           <Nav.Link href="/mis/events">
             Member of Institution of Solidarity
           </Nav.Link>
-          <Nav.Link href="/benefits">Benefits</Nav.Link>
+          <Nav.Link href="/benef">Benefits</Nav.Link>
           {/* <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-          <Nav.Link href="/profile">
-            Profile
-          </Nav.Link>
+          <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="/login">Login</Nav.Link>
         </Nav>
         {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

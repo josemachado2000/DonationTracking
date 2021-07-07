@@ -1130,6 +1130,53 @@ app.post("/get_USER_by_Id", async (req, res) => {
     });
 });
 
+//Login
+app.post("/get_LOGIN", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.type === "USER" &&
+            decodedPayload.username === req.body.username &&
+            decodedPayload.password === req.body.password
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //TODO: SUPPLCO ENDPOINTS
 //Get Orders by Supplco Id
 app.get("/get_ORDERS_by_SUPPLCO", async (req, res) => {

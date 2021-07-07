@@ -45,6 +45,7 @@ const Donate = ({ event, onDonateSuccess }) => {
       date: date,
       eventId: event.id,
     };
+
     try {
       await axios.post("http://localhost:8080/create_DONATION", newDonation);
 

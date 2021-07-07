@@ -1,12 +1,13 @@
 import { BrowserRouter, Route } from "react-router-dom";
 
-import Events from "./components/Events/Events";
-import SolInsts from "./components/SolInst/SolInsts";
-import MisEvents from "./components/Mis/MisEvents";
-import Benefits from "./components/Benef/Benef";
-import Profile from "./components/Profiles/Profile";
+import Events from "../components/Events/Events";
+import SolInsts from "../components/SolInst/SolInsts";
+import MisEvents from "../components/Mis/MisEvents";
+import Benef from "../components/Benef/Benef";
+import Profile from "../components/Profiles/Profile";
+import Login from "../components/Login/Login";
 
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "../components/NavBar/NavBar";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <Route path="/events" exact component={Events} />
         <Route path="/solidarity_institutions" exact component={SolInsts} />
         <Route path="/mis/events" exact component={MisEvents} />
-        <Route path="/benefits" exact component={Benefits} />
+        <Route path="/benef" exact component={Benef} />
         <Route path="/profile" exact component={Profile} />
+        <Route path="/login" exact component={Login} />
       </BrowserRouter>
     </div>
   );

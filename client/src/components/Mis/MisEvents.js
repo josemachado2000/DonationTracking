@@ -9,37 +9,49 @@ import MisEvent from "./MisEvent";
 import AddEvent from "./AddEvent";
 
 const MisEvents = ({ mis }) => {
+  const [events, setEvents] = useState([]);
   const [events1, setEvents1] = useState([]);
-  const [events2, setEvents2] = useState([]);
 
   useEffect(() => {
     const getEvents = async () => {
       const events = await fetchEvents();
-      setEvents1(events);
-      setEvents2(events);
+      setEvents(events);
     };
     getEvents();
+
+    const getEvents1 = async () => {
+      const events = await fetchEvents();
+      setEvents1(events);
+    };
+    getEvents1();
   }, []);
 
   const fetchEvents = async () => {
     // const misId = { misId: mis.id };
-    const misId = { misId: "462109f7-d76e-46bf-9bed-7e0e67a0f774" };
+    const misId = { misId: "35347612-de7a-4334-9357-fd3cbe81a382" };
 
     const response = await axios.post(
       "http://localhost:8080/get_EVENTS_by_MIS",
       misId
     );
+
     return response.data;
   };
 
   const filterEvents = (array1, array2) => {
+    //console.log(array1);
+    //console.log(array2);
     for (var ar1 of array1) {
       for (var ar2 of array2) {
+        //console.log(ar1.oldId + "           " + ar2.id);
         if (ar1.oldId === ar2.id) {
+          //console.log("Corta: " + ar2.id);
           array2.splice(array2.indexOf(ar2), 1);
+          break;
         }
       }
     }
+    //console.log(array2);
     return array2;
   };
 
@@ -73,7 +85,6 @@ const MisEvents = ({ mis }) => {
 
     if (response.status === 200) {
       setEvents1([...events1, newEvent]);
-      setEvents2([...events2, newEvent]);
     }
   };
 
@@ -86,10 +97,10 @@ const MisEvents = ({ mis }) => {
             Add Event
           </Link>
         </div>
-        {filterEvents(events1, events2).length === 0 ? (
+        {filterEvents(events, events1).length === 0 ? (
           <h6>Este Mis nao tem eventos</h6>
         ) : (
-          filterEvents(events1, events2).map((event) => (
+          filterEvents(events, events1).map((event) => (
             <MisEvent key={event.id} event={event} />
           ))
         )}
