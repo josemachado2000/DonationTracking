@@ -22,7 +22,7 @@ const NavBar = () => {
           <Nav.Link href="/benefits">Benefits</Nav.Link>
           {/* <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-          <Nav.Link href="/mis/profile">
+          <Nav.Link href="/profile">
             Profile
           </Nav.Link>
         </Nav>

@@ -23,8 +23,8 @@ const Profile = () => {
     return (
       <>
           <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Profile</h3>
-          {profiles.map((profile) => (
-            <ProfileDetails key={profile.id} profile={profile} />
+          {profiles.map((user) => (
+            <ProfileDetails key={user.id} user={user} />
           ))}
       </>
     );

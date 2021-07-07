@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const ProfileDetails = ({profile}) => {
+const ProfileDetails = ({user}) => {
 
   return (
       <Form>
@@ -11,7 +11,7 @@ const ProfileDetails = ({profile}) => {
             Username
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.username} />
+            <Form.Control plaintext readOnly value={user.username} />
           </Col>
         </Form.Group>
 
@@ -20,7 +20,7 @@ const ProfileDetails = ({profile}) => {
             Password
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.password} />
+            <Form.Control plaintext readOnly value={user.password} />
           </Col>
         </Form.Group>
 
@@ -29,7 +29,7 @@ const ProfileDetails = ({profile}) => {
             Name
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.name} />
+            <Form.Control plaintext readOnly value={user.name} />
           </Col>
         </Form.Group>
 
@@ -38,7 +38,7 @@ const ProfileDetails = ({profile}) => {
             Institution
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.institution} />
+            <Form.Control plaintext readOnly value={user.institution} />
           </Col>
         </Form.Group>
 
@@ -47,7 +47,7 @@ const ProfileDetails = ({profile}) => {
             Address
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.address} />
+            <Form.Control plaintext readOnly value={user.address} />
           </Col>
         </Form.Group>
 
@@ -56,7 +56,7 @@ const ProfileDetails = ({profile}) => {
             Email
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.email} />
+            <Form.Control plaintext readOnly value={user.email} />
           </Col>
         </Form.Group>
 
@@ -65,7 +65,7 @@ const ProfileDetails = ({profile}) => {
             Contact
           </Form.Label>
           <Col sm="10">
-            <Form.Control plaintext readOnly value={profile.contact} />
+            <Form.Control plaintext readOnly value={user.contact} />
           </Col>
         </Form.Group>
       </Form>

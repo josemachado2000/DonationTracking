@@ -18,7 +18,7 @@ function App() {
         <Route path="/solidarity_institutions" exact component={SolInsts} />
         <Route path="/mis/events" exact component={MisEvents} />
         <Route path="/benefits" exact component={Benefits} />
-        <Route path="/profiles" exact component={Profile} />
+        <Route path="/profile" exact component={Profile} />
       </BrowserRouter>
     </div>
   );
