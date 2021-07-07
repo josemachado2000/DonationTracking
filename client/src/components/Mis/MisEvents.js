@@ -23,7 +23,7 @@ const MisEvents = ({ mis }) => {
 
   const fetchEvents = async () => {
     // const misId = { misId: mis.id };
-    const misId = { misId: "ae30e6d0-1283-43ff-a04a-c9de4d27f271" };
+    const misId = { misId: "462109f7-d76e-46bf-9bed-7e0e67a0f774" };
 
     const response = await axios.post(
       "http://localhost:8080/get_EVENTS_by_MIS",
@@ -62,8 +62,8 @@ const MisEvents = ({ mis }) => {
         (event.endDate.getMonth() + 1) +
         "/" +
         event.endDate.getFullYear(),
-      misId: "1781190e-2726-4136-aa4d-f9c55b23f4f0",
-      solInstId: "f64284d0-419b-48b7-992b-4cce1020b0e5",
+      misId: "462109f7-d76e-46bf-9bed-7e0e67a0f774",
+      solInstId: "84cba60a-1067-476f-a8b5-40507596dde0",
     };
 
     const response = await axios.post(

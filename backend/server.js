@@ -1085,7 +1085,7 @@ app.get("/get_DONATIONS_by_DONOR", async (req, res) => {
 
 //TODO: USERS ENDPOINTS
 //Get Profile by id
-app.get("/get_USER_by_Id", async (req, res) => {
+app.post("/get_USER_by_Id", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
