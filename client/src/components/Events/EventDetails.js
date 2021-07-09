@@ -52,8 +52,8 @@ const EventDetails = ({ event, component, onDonateSuccess }) => {
         (new Date(endDate).getMonth() + 1) +
         "/" +
         new Date(endDate).getFullYear(),
-      misId: "35347612-de7a-4334-9357-fd3cbe81a382",
-      solInstId: "a1d6641e-b3a7-4b71-97b7-c738bbd4dbaa",
+      misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
+      solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
     };
 
     console.log(newEvent);
@@ -71,7 +71,7 @@ const EventDetails = ({ event, component, onDonateSuccess }) => {
       <ProgressBar
         animated
         now={now}
-        label={`${now}% | ${event.currentAmount}€`}
+        label={`${now}% | ${event.currentAmount.toFixed(2)}€`}
       />
     );
 

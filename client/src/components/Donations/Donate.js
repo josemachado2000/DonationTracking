@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Form from "react-bootstrap/Form";
@@ -14,6 +14,8 @@ const Donate = ({ event, onDonateSuccess }) => {
   const [showDonate, setShowDonate] = useState(false);
   const [amount, setAmount] = useState(0);
   const [donateClick, setDonateClick] = useState("");
+
+
 
   const onClickDonate = () => {
     if (showDonate === false) {
@@ -56,6 +58,25 @@ const Donate = ({ event, onDonateSuccess }) => {
       setTimeout(function () {
         alert(false);
       }, 3000);
+      const newEventDonate = {
+        oldId: event.id,
+        name: event.name,
+        description: event.description,
+        targetReason: event.targetReason,
+        targetAmount: event.targetAmount,
+        currentAmount: event.currentAmount + amount,
+        beginDate: event.beginDate,
+        endDate:event.endDate,
+        misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
+        solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
+      };
+  
+      console.log(newEventDonate);
+      try {
+        await axios.post("http://localhost:8080/create_EVENT", newEventDonate);
+      } catch (e) {
+        console.log(e);
+      }
     } catch (e) {
       console.log(e);
     }
