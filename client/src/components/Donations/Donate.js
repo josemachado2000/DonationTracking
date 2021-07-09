@@ -15,8 +15,6 @@ const Donate = ({ event, onDonateSuccess }) => {
   const [amount, setAmount] = useState(0);
   const [donateClick, setDonateClick] = useState("");
 
-
-
   const onClickDonate = () => {
     if (showDonate === false) {
       setShowDonate(true);
@@ -27,8 +25,6 @@ const Donate = ({ event, onDonateSuccess }) => {
         [date.getMonth() + 1, date.getDate(), date.getFullYear()].join("/") +
         " " +
         [date.getHours(), date.getMinutes(), date.getSeconds()].join(":");
-
-      console.log(dateformatted + " --> " + amount);
       if (amount === 0) {
         alert("Select donation value");
       } else {
@@ -66,11 +62,11 @@ const Donate = ({ event, onDonateSuccess }) => {
         targetAmount: event.targetAmount,
         currentAmount: event.currentAmount + amount,
         beginDate: event.beginDate,
-        endDate:event.endDate,
+        endDate: event.endDate,
         misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
         solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
       };
-  
+
       console.log(newEventDonate);
       try {
         await axios.post("http://localhost:8080/create_EVENT", newEventDonate);

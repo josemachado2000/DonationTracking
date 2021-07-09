@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddEvent = ({ mis, onAddEvent }) => {
+const AddEvent = ({ onAddEvent }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [targetReason, setTargetReason] = useState("");

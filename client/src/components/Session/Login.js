@@ -6,12 +6,11 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Events from "../Events/Events";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState([]);
   let history = useHistory();
 
   const onLoginClick = async () => {
@@ -30,7 +29,27 @@ const Login = () => {
           alert("User doesnt exist!");
         } else {
           setUser(response.data);
-          history.push("/events");
+          localStorage.setItem("loggedUser", JSON.stringify(response.data[0]));
+
+          switch (response.data[0].dataType.subType) {
+            case "MIS":
+              history.push("/mis/events");
+              history.go(0);
+              break;
+            case "DONOR":
+              history.push("/events");
+              history.go(0);
+              break;
+            case "BENEF":
+              history.push("/benef");
+              history.go(0);
+              break;
+            case "ADMIN":
+              history.push("/admin");
+              history.go(0);
+              break;
+            default:
+          }
         }
       } catch (e) {
         console.log(e);

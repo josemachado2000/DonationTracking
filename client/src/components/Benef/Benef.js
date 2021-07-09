@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Benefits = () => {
   const [benefits, setBenefits] = useState([]);
+  const [benef] = useState(JSON.parse(localStorage.getItem("loggedUser")));
 
   useEffect(() => {
     const getBenefits = async () => {
@@ -18,8 +19,11 @@ const Benefits = () => {
 
   const fetchBenefits = async () => {
     //const benefId = { benefId: benef.id };
-    const benefId = { benefId: "396dcfd9-5299-4ffe-be31-4c70a01db440" };
-    const response = await axios.post("http://localhost:8080/get_BENEFITS_by_BENEF", benefId);
+    const benefId = { benefId: benef.id };
+    const response = await axios.post(
+      "http://localhost:8080/get_BENEFITS_by_BENEF",
+      benefId
+    );
     return response.data;
   };
 

@@ -8,9 +8,10 @@ import "./Mis.css";
 import MisEvent from "./MisEvent";
 import AddEvent from "./AddEvent";
 
-const MisEvents = ({ mis }) => {
+const MisEvents = () => {
   const [events, setEvents] = useState([]);
   const [events1, setEvents1] = useState([]);
+  const [mis] = useState(JSON.parse(localStorage.getItem("loggedUser")));
 
   useEffect(() => {
     const getEvents = async () => {
@@ -27,8 +28,7 @@ const MisEvents = ({ mis }) => {
   }, []);
 
   const fetchEvents = async () => {
-    // const misId = { misId: mis.id };
-    const misId = { misId: "1a755c26-5266-496a-a8c6-59d2857e84e7" };
+    const misId = { misId: mis.id };
 
     const response = await axios.post(
       "http://localhost:8080/get_EVENTS_by_MIS",
@@ -62,6 +62,7 @@ const MisEvents = ({ mis }) => {
       description: event.description,
       targetReason: event.targetReason,
       targetAmount: event.targetAmount,
+      currentAmount: 0,
       beginDate:
         event.beginDate.getDate() +
         "/" +
@@ -74,7 +75,7 @@ const MisEvents = ({ mis }) => {
         (event.endDate.getMonth() + 1) +
         "/" +
         event.endDate.getFullYear(),
-      misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
+      misId: mis.id,
       solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
     };
 
@@ -107,7 +108,7 @@ const MisEvents = ({ mis }) => {
       </div>
       <Route
         path="/mis/events/addEvent"
-        render={() => <AddEvent mis={mis} onAddEvent={addEvent} />}
+        render={() => <AddEvent onAddEvent={addEvent} />}
       />
     </Router>
   );

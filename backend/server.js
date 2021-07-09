@@ -867,7 +867,6 @@ app.post("/create_DONOR", async (req, res) => {
       type: "USER",
       subType: "DONOR",
     },
-    userId: req.body.userId,
   };
 
   // Input for one transaction
