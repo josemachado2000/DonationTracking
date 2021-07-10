@@ -12,6 +12,7 @@ import SolInstList from "./SolInstList";
 const Admin = () => {
   const [solInsts, setSolInsts] = useState([]);
   const [mis, setMis] = useState([]);
+  const [mis1, setMis1] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
@@ -26,6 +27,12 @@ const Admin = () => {
       setMis(mis);
     };
     getMis();
+
+    const getMis1 = async () => {
+      const mis = await fetchMis();
+      setMis1(mis);
+    };
+    getMis1();
   }, []);
 
   const fetchSolInsts = async () => {
@@ -84,7 +91,7 @@ const Admin = () => {
       <div className="list_section">
         <SolInstList solInsts={solInsts} />
         <MisList
-          mis={filterMis(mis, mis)}
+          mis={filterMis(mis, mis1)}
           solInsts={solInsts}
           onDisableMis={createMis}
           onEnableMis={createMis}

@@ -8,7 +8,7 @@ import Admin from "../components/Admin/Admin";
 import Profile from "../components/Profiles/Profile";
 import Login from "../components/Session/Login";
 import Logout from "../components/Session/Logout";
-
+import Donations from "../components/Donations/Donations";
 import NavBar from "../components/NavBar/NavBar";
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
 
         <Route path="/events" exact component={Events} />
         <Route path="/solidarity_institutions" exact component={SolInsts} />
+        <Route path="/donations" exact component={Donations} />
 
         <Route path="/mis" exact component={MisEvents} />
 

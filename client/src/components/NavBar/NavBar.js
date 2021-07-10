@@ -21,6 +21,18 @@ const NavBar = ({ user }) => {
           )}
 
           {user ? (
+            user.dataType.subType === "DONOR" ? (
+              <>
+                <Nav.Link href="/donations">My Donations</Nav.Link>
+              </>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
+
+          {user ? (
             user.dataType.subType === "MIS" ? (
               <>
                 <Navbar.Brand href="/mis">Donation Tracking</Navbar.Brand>
