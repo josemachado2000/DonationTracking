@@ -7,10 +7,10 @@ const NavBar = ({ user }) => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">Donation Tracking</Navbar.Brand>
         <Nav className="mr-auto">
           {!user || user.dataType.subType === "DONOR" ? (
             <>
+              <Navbar.Brand href="/">Donation Tracking</Navbar.Brand>
               <Nav.Link href="/events">Events</Nav.Link>
               <Nav.Link href="/solidarity_institutions">
                 Solidarity Institutions
@@ -22,7 +22,10 @@ const NavBar = ({ user }) => {
 
           {user ? (
             user.dataType.subType === "MIS" ? (
-              <Nav.Link href="/mis/events">Events</Nav.Link>
+              <>
+                <Navbar.Brand href="/mis">Donation Tracking</Navbar.Brand>
+                <Nav.Link href="/mis">Events</Nav.Link>
+              </>
             ) : (
               ""
             )
@@ -32,7 +35,10 @@ const NavBar = ({ user }) => {
 
           {user ? (
             user.dataType.subType === "BENEF" ? (
-              <Nav.Link href="/benef">Benefits</Nav.Link>
+              <>
+                <Navbar.Brand href="/benef">Donation Tracking</Navbar.Brand>
+                <Nav.Link href="/benef">Benefits</Nav.Link>
+              </>
             ) : (
               ""
             )
@@ -44,6 +50,19 @@ const NavBar = ({ user }) => {
             user.dataType.subType === "MIS" ||
             user.dataType.subType === "DONOR" ? (
               <Nav.Link href="/profile">Profile</Nav.Link>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
+
+          {user ? (
+            user.dataType.subType === "ADMIN" ? (
+              <>
+                <Navbar.Brand href="/admin">Donation Tracking</Navbar.Brand>
+                <Nav.Link href="/invoices">Invoices</Nav.Link>
+              </>
             ) : (
               ""
             )

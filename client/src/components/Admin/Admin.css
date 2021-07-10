@@ -1,0 +1,21 @@
+.create_section {
+  display: flex;
+  margin: 20px;
+}
+.list_section {
+  display: flex;
+  margin: 20px;
+}
+.card {
+  margin: 20px;
+  width: 50%;
+  height: 300px;
+}
+.list-group {
+  margin: 20px;
+  width: 50%;
+  height: 300px;
+}
+.modal-dialog {
+  max-width: 1000px !important;
+}

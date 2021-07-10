@@ -10,7 +10,6 @@ import Button from "react-bootstrap/Button";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState([]);
   let history = useHistory();
 
   const onLoginClick = async () => {
@@ -28,12 +27,11 @@ const Login = () => {
         if (response.data.length === 0) {
           alert("User doesnt exist!");
         } else {
-          setUser(response.data);
           localStorage.setItem("loggedUser", JSON.stringify(response.data[0]));
 
           switch (response.data[0].dataType.subType) {
             case "MIS":
-              history.push("/mis/events");
+              history.push("/mis");
               history.go(0);
               break;
             case "DONOR":

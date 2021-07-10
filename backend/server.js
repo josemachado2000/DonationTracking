@@ -33,8 +33,8 @@ const TP_NAMESPACE = _hash(TP_FAMILY).substr(0, 6);
 const TP_VERSION = "1.1";
 
 //TODO: ADMIN ENDPOINTS
-//Create MIS
-app.post("/create_MIS", async (req, res) => {
+//Create ADMIN
+app.post("/create_ADMIN", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
@@ -42,11 +42,192 @@ app.post("/create_MIS", async (req, res) => {
     username: req.body.username,
     password: req.body.password,
     name: req.body.name,
-    institution: req.body.institution,
+    email: req.body.email,
+    contact: req.body.contact,
+    dataType: {
+      type: "USER",
+      subType: "ADMIN",
+    },
+  };
+
+  // Input for one transaction
+  const payloadBytes = Buffer.from(JSON.stringify(payload));
+
+  // Output we created with this transaction input
+
+  const transactionHeaderBytes = protobuf.TransactionHeader.encode({
+    familyName: TP_FAMILY,
+    familyVersion: TP_VERSION,
+    // Needs to be same as the expected address we create in contract
+    // If diffrent we wont get access to put state and get state of the address
+    inputs: [address],
+    outputs: [address],
+    signerPublicKey: signer.getPublicKey().asHex(),
+    batcherPublicKey: signer.getPublicKey().asHex(),
+    dependencies: [],
+    payloadSha512: createHash("sha512").update(payloadBytes).digest("hex"),
+  }).finish();
+
+  const signature = signer.sign(transactionHeaderBytes);
+
+  // Sign the transaction
+  const transaction = protobuf.Transaction.create({
+    header: transactionHeaderBytes,
+    headerSignature: signature,
+    payload: payloadBytes,
+  });
+
+  // Wrap it into list of transaction
+  const transactions = [transaction];
+
+  const batchHeaderBytes = protobuf.BatchHeader.encode({
+    signerPublicKey: signer.getPublicKey().asHex(),
+    transactionIds: transactions.map((txn) => txn.headerSignature),
+  }).finish();
+
+  // Wrap the transaction list into batch
+  const batchSignature = signer.sign(batchHeaderBytes);
+
+  // And sign it
+  const batch = protobuf.Batch.create({
+    header: batchHeaderBytes,
+    headerSignature: batchSignature,
+    transactions: transactions,
+  });
+
+  // Wrap them in batch list
+  const batchListBytes = protobuf.BatchList.encode({
+    batches: [batch],
+  }).finish();
+  axios
+    .post(`${API_URL}/batches`, batchListBytes, {
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+    .then((response) => {
+      console.log({
+        address,
+        TP_NAMESPACE,
+      });
+      console.log(response.data);
+
+      res.send({
+        message: "submitted",
+        data: response.data,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send({
+        message: "submitted",
+        error: error.response.data,
+      });
+    });
+});
+
+//Create ADMIN
+app.post("/create_SOLINST", async (req, res) => {
+  let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
+
+  const payload = {
+    id: uuidv4(),
+    name: req.body.name,
+    email: req.body.email,
+    contact: req.body.contact,
+    dataType: {
+      type: "SOLINST",
+      subType: "SOLINST",
+    },
+  };
+
+  // Input for one transaction
+  const payloadBytes = Buffer.from(JSON.stringify(payload));
+
+  // Output we created with this transaction input
+
+  const transactionHeaderBytes = protobuf.TransactionHeader.encode({
+    familyName: TP_FAMILY,
+    familyVersion: TP_VERSION,
+    // Needs to be same as the expected address we create in contract
+    // If diffrent we wont get access to put state and get state of the address
+    inputs: [address],
+    outputs: [address],
+    signerPublicKey: signer.getPublicKey().asHex(),
+    batcherPublicKey: signer.getPublicKey().asHex(),
+    dependencies: [],
+    payloadSha512: createHash("sha512").update(payloadBytes).digest("hex"),
+  }).finish();
+
+  const signature = signer.sign(transactionHeaderBytes);
+
+  // Sign the transaction
+  const transaction = protobuf.Transaction.create({
+    header: transactionHeaderBytes,
+    headerSignature: signature,
+    payload: payloadBytes,
+  });
+
+  // Wrap it into list of transaction
+  const transactions = [transaction];
+
+  const batchHeaderBytes = protobuf.BatchHeader.encode({
+    signerPublicKey: signer.getPublicKey().asHex(),
+    transactionIds: transactions.map((txn) => txn.headerSignature),
+  }).finish();
+
+  // Wrap the transaction list into batch
+  const batchSignature = signer.sign(batchHeaderBytes);
+
+  // And sign it
+  const batch = protobuf.Batch.create({
+    header: batchHeaderBytes,
+    headerSignature: batchSignature,
+    transactions: transactions,
+  });
+
+  // Wrap them in batch list
+  const batchListBytes = protobuf.BatchList.encode({
+    batches: [batch],
+  }).finish();
+  axios
+    .post(`${API_URL}/batches`, batchListBytes, {
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+    .then((response) => {
+      console.log({
+        address,
+        TP_NAMESPACE,
+      });
+      console.log(response.data);
+
+      res.send({
+        message: "submitted",
+        data: response.data,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send({
+        message: "submitted",
+        error: error.response.data,
+      });
+    });
+});
+
+//Create MIS
+app.post("/create_MIS", async (req, res) => {
+  let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
+  console.log(req.body);
+  const payload = {
+    id: uuidv4(),
+    oldId: req.body.oldId,
+    username: req.body.username,
+    password: req.body.password,
+    name: req.body.name,
+    solInstId: req.body.solInstId,
     address: req.body.address,
     email: req.body.email,
     contact: req.body.contact,
-    isAdmin: req.body.isAdmin,
+    isEnabled: req.body.isEnabled,
     dataType: {
       type: "USER",
       subType: "MIS",
@@ -310,6 +491,49 @@ app.post("/create_SUPPLCO", async (req, res) => {
         message: "submitted",
         error: error.response.data,
       });
+    });
+});
+
+//Get all ADMIN
+app.get("/get_all_ADMIN", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.subType === "ADMIN") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
@@ -1860,5 +2084,97 @@ app.get("/get_DONATIONS_by_DONOR", async (req, res) => {
       console.log(error);
     });
 });
+
+//! Create ADMIN on Blockchain Start
+const createAdmin = () => {
+  let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
+
+  const payload = {
+    id: uuidv4(),
+    username: "admin",
+    password: "admin123",
+    name: "José Cid",
+    email: "josecid@outlook.pt",
+    contact: "967843245",
+    dataType: {
+      type: "USER",
+      subType: "ADMIN",
+    },
+  };
+
+  // Input for one transaction
+  const payloadBytes = Buffer.from(JSON.stringify(payload));
+
+  // Output we created with this transaction input
+
+  const transactionHeaderBytes = protobuf.TransactionHeader.encode({
+    familyName: TP_FAMILY,
+    familyVersion: TP_VERSION,
+    // Needs to be same as the expected address we create in contract
+    // If diffrent we wont get access to put state and get state of the address
+    inputs: [address],
+    outputs: [address],
+    signerPublicKey: signer.getPublicKey().asHex(),
+    batcherPublicKey: signer.getPublicKey().asHex(),
+    dependencies: [],
+    payloadSha512: createHash("sha512").update(payloadBytes).digest("hex"),
+  }).finish();
+
+  const signature = signer.sign(transactionHeaderBytes);
+
+  // Sign the transaction
+  const transaction = protobuf.Transaction.create({
+    header: transactionHeaderBytes,
+    headerSignature: signature,
+    payload: payloadBytes,
+  });
+
+  // Wrap it into list of transaction
+  const transactions = [transaction];
+
+  const batchHeaderBytes = protobuf.BatchHeader.encode({
+    signerPublicKey: signer.getPublicKey().asHex(),
+    transactionIds: transactions.map((txn) => txn.headerSignature),
+  }).finish();
+
+  // Wrap the transaction list into batch
+  const batchSignature = signer.sign(batchHeaderBytes);
+
+  // And sign it
+  const batch = protobuf.Batch.create({
+    header: batchHeaderBytes,
+    headerSignature: batchSignature,
+    transactions: transactions,
+  });
+
+  // Wrap them in batch list
+  const batchListBytes = protobuf.BatchList.encode({
+    batches: [batch],
+  }).finish();
+  axios
+    .post(`${API_URL}/batches`, batchListBytes, {
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+    .then((response) => {
+      console.log({
+        address,
+        TP_NAMESPACE,
+      });
+      console.log(response.data);
+
+      // res.send({
+      //   message: "submitted",
+      //   data: response.data,
+      // });
+    })
+    .catch((error) => {
+      console.error(error);
+      // res.send({
+      //   message: "submitted",
+      //   error: error.response.data,
+      // });
+    });
+};
+createAdmin();
 
 app.listen(8080, () => console.log("Server started"));
