@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const AddEvent = ({ onAddEvent }) => {
   const [name, setName] = useState("");
@@ -14,9 +18,35 @@ const AddEvent = ({ onAddEvent }) => {
   const [targetAmount, setTargetAmount] = useState(0.0);
   const [beginDate, setBeginDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [benefs, setBenefs] = useState([]);
+  const [benefId, setBenefId] = useState("");
+  const [benefDropdownTitle, setBenefDropdownTitle] = useState(
+    "Select a Beneficiary"
+  );
+
+  useEffect(() => {
+    const getBenefs = async () => {
+      const benefs = await fetchBenefs();
+      setBenefs(benefs);
+    };
+    getBenefs();
+  }, []);
+
+  const fetchBenefs = async () => {
+    const response = await axios.get("http://localhost:8080/get_all_BENEFS");
+    return response.data;
+  };
 
   const addEvent = () => {
-    if (!name || !description || !targetReason || !targetAmount) {
+    if (
+      !name ||
+      !description ||
+      !targetReason ||
+      !targetAmount ||
+      !beginDate ||
+      !endDate ||
+      !benefId
+    ) {
       alert("Empty fields!");
       return;
     }
@@ -28,13 +58,19 @@ const AddEvent = ({ onAddEvent }) => {
       targetAmount,
       beginDate,
       endDate,
+      benefId,
     });
 
     setName("");
     setDescription("");
     setTargetReason("");
     setTargetAmount("");
+    setBeginDate("");
+    setEndDate("");
+    setBenefId("");
   };
+
+  const createBeneficiary = () => {};
 
   return (
     <div className="addEvent_page">
@@ -81,15 +117,43 @@ const AddEvent = ({ onAddEvent }) => {
             <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
               Target Amount
             </Form.Label>
-            <Col sm="10">
+            <Col sm="10" style={{ display: "flex" }}>
               <Form.Control
                 value={targetAmount}
                 onChange={(e) => setTargetAmount(e.target.value)}
               />
+              <InputGroup.Text style={{ width: "8%" }}>€</InputGroup.Text>
             </Col>
           </Form.Group>
         </Form.Group>
 
+        <DropdownButton title={benefDropdownTitle}>
+          {benefs.length === 0 ? (
+            <Dropdown.Item onClick={() => createBeneficiary()}>
+              Add Beneficiary
+            </Dropdown.Item>
+          ) : (
+            <>
+              {benefs.map((benef) => (
+                <Dropdown.Item
+                  key={benef.id}
+                  as="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setBenefDropdownTitle(benef.name);
+                    setBenefId(benef.id);
+                  }}
+                >
+                  {benef}
+                </Dropdown.Item>
+              ))}
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={() => createBeneficiary()}>
+                Add Beneficiary
+              </Dropdown.Item>
+            </>
+          )}
+        </DropdownButton>
         <Form.Group as={Row}>
           <Form.Group as={Col} style={{ padding: "0px" }}>
             <Form.Label column sm="10" style={{ fontWeight: "bold" }}>

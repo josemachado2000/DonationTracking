@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./Admin.css";
@@ -28,6 +27,12 @@ const Admin = () => {
       setMis(mis);
     };
     getMis();
+
+    const getSupplCo = async () => {
+      const supplCo = await fetchSupplCo();
+      setSupplCo(supplCo);
+    };
+    getSupplCo();
   }, []);
 
   const fetchSolInsts = async () => {
@@ -38,6 +43,12 @@ const Admin = () => {
 
   const fetchMis = async () => {
     const response = await axios.get("http://localhost:8080/get_all_MIS");
+
+    return response.data;
+  };
+
+  const fetchSupplCo = async () => {
+    const response = await axios.get("http://localhost:8080/get_all_SUPPLCO");
 
     return response.data;
   };

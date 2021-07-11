@@ -96,11 +96,9 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
   return (
     <>
       <Card onClick={() => handleShow()}>
-        <Card.Header className="cardTitle">Create MIS</Card.Header>
-        <Card.Body>
-          <Card.Text></Card.Text>
-          <Card.Text></Card.Text>
-        </Card.Body>
+        <Card.Header className="cardTitle">
+          Create Member of Solidarity Institution
+        </Card.Header>
       </Card>
 
       <Modal
@@ -110,7 +108,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create Member</Modal.Title>
+          <Modal.Title>Create Member of Solidarity Institution</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

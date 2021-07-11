@@ -313,7 +313,7 @@ app.post("/create_BENEF", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
-    id: uuidv4(),
+    id: req.body.id,
     username: req.body.username,
     password: req.body.password,
     name: req.body.name,
@@ -580,8 +580,51 @@ app.get("/get_all_MIS", async (req, res) => {
     });
 });
 
-//Get all BENEF
-app.get("/get_all_BENEF", async (req, res) => {
+//Get all SUPPLCO
+app.get("/get_all_SUPPLCO", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.subType === "SUPPLCO") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//Get all BENEFS
+app.get("/get_all_BENEFS", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -1584,7 +1627,7 @@ app.post("/create_EVENT", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
-    id: uuidv4(),
+    id: req.body.id,
     oldId: req.body.oldId,
     name: req.body.name,
     description: req.body.description,

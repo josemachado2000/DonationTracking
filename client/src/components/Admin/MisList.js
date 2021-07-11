@@ -54,6 +54,9 @@ const MisList = ({ mis, solInsts, onDisableMis, onEnableMis }) => {
                     {solInsts.map((inst) =>
                       inst.id === mis.solInstId ? " " + inst.name : ""
                     )}
+                    <br />
+                    Email: {mis.email} <br />
+                    Contact: {mis.contact} <br />
                   </ListGroup.Item>
                   <Button variant="primary" onClick={() => disableMis(mis)}>
                     Disable
@@ -67,6 +70,9 @@ const MisList = ({ mis, solInsts, onDisableMis, onEnableMis }) => {
                     {solInsts.map((inst) =>
                       inst.id === mis.solInstId ? " " + inst.name : ""
                     )}
+                    <br />
+                    Email: {mis.email} <br />
+                    Contact: {mis.contact} <br />
                   </ListGroup.Item>
                   <Button variant="primary" onClick={() => enableMis(mis)}>
                     Enable

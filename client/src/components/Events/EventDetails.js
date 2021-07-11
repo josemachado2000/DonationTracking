@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 import Donate from "../Donations/Donate";
 
@@ -13,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const EventDetails = ({ event, component, onDonateSuccess }) => {
+  const [mis] = useState(JSON.parse(localStorage.getItem("loggedUser")));
   const [name, setName] = useState(event.name);
   const [description, setDescription] = useState(event.description);
   const [targetReason, setTargetReason] = useState(event.targetReason);
@@ -39,6 +41,7 @@ const EventDetails = ({ event, component, onDonateSuccess }) => {
     }
 
     const newEvent = {
+      id: uuidv4(),
       oldId: event.id,
       name: name,
       description: description,
@@ -52,13 +55,13 @@ const EventDetails = ({ event, component, onDonateSuccess }) => {
         (new Date(endDate).getMonth() + 1) +
         "/" +
         new Date(endDate).getFullYear(),
-      misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
-      solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
+      misId: mis.id,
+      solInstId: mis.solInstId,
     };
 
-    console.log(newEvent);
     try {
       await axios.post("http://localhost:8080/create_EVENT", newEvent);
+      setAllowEdit(!allowEdit);
     } catch (e) {
       console.log(e);
     }
