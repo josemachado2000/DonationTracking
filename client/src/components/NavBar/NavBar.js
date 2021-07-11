@@ -82,7 +82,14 @@ const NavBar = ({ user }) => {
             ""
           )}
 
-          {!user ? <Nav.Link href="/login">Login</Nav.Link> : ""}
+          {!user ? (
+            <>
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/signup">Sign Up</Nav.Link>
+            </>
+          ) : (
+            ""
+          )}
           {user ? <Nav.Link href="/logout">Logout</Nav.Link> : ""}
         </Nav>
       </Navbar>

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
 const MisList = ({ mis, solInsts, onDisableMis, onEnableMis }) => {
   const disableMis = (mis) => {
+    console.log(mis);
     const newMis = {
+      id: uuidv4(),
       oldId: mis.id,
       username: mis.username,
       password: mis.password,
@@ -17,11 +19,13 @@ const MisList = ({ mis, solInsts, onDisableMis, onEnableMis }) => {
       solInstId: mis.solInstId,
     };
 
+    console.log(newMis);
     onDisableMis(newMis);
   };
 
   const enableMis = (mis) => {
     const newMis = {
+      id: uuidv4(),
       oldId: mis.id,
       username: mis.username,
       password: mis.password,

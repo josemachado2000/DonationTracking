@@ -8,6 +8,7 @@ import Admin from "../components/Admin/Admin";
 import Profile from "../components/Profiles/Profile";
 import Login from "../components/Session/Login";
 import Logout from "../components/Session/Logout";
+import Signup from "../components/Session/Signup";
 import Donations from "../components/Donations/Donations";
 import NavBar from "../components/NavBar/NavBar";
 
@@ -32,6 +33,7 @@ function App() {
 
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
+        <Route path="/signup" exact component={Signup} />
       </BrowserRouter>
     </div>
   );

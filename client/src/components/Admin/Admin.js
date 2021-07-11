@@ -8,12 +8,13 @@ import CreateMis from "./CreateMis";
 import CreateSolInst from "./CreateSolInst";
 import MisList from "./MisList";
 import SolInstList from "./SolInstList";
+import CreateSupplCo from "./CreateSupplCo";
+import SupplCoList from "./SupplCoList";
 
 const Admin = () => {
   const [solInsts, setSolInsts] = useState([]);
   const [mis, setMis] = useState([]);
-  const [mis1, setMis1] = useState([]);
-  let history = useHistory();
+  const [supplCo, setSupplCo] = useState([]);
 
   useEffect(() => {
     const getSolInsts = async () => {
@@ -27,12 +28,6 @@ const Admin = () => {
       setMis(mis);
     };
     getMis();
-
-    const getMis1 = async () => {
-      const mis = await fetchMis();
-      setMis1(mis);
-    };
-    getMis1();
   }, []);
 
   const fetchSolInsts = async () => {
@@ -69,17 +64,29 @@ const Admin = () => {
     }
   };
 
-  const filterMis = (array1, array2) => {
-    for (var ar1 of array1) {
-      for (var ar2 of array2) {
-        if (ar1.oldId === ar2.id) {
-          array2.splice(array2.indexOf(ar2), 1);
-          break;
-        }
-      }
-    }
+  const createSupplCo = async (newSupplCo) => {
+    const response = await axios.post(
+      "http://localhost:8080/create_SUPPLCO",
+      newSupplCo
+    );
 
-    return array2;
+    if (response.status === 200) {
+      setSupplCo([...supplCo, newSupplCo]);
+    }
+  };
+
+  const filteredMis = (mis) => {
+    var misIds = [];
+    mis.forEach((m) => {
+      misIds.push(m.oldId);
+    });
+
+    mis = mis.filter(function (item) {
+      console.log(item.id);
+      return !misIds.includes(item.id);
+    });
+
+    return mis;
   };
 
   return (
@@ -87,15 +94,17 @@ const Admin = () => {
       <div className="create_section">
         <CreateSolInst onCreateSolInst={createSolInst} />
         <CreateMis solInsts={solInsts} onCreateMis={createMis} />
+        <CreateSupplCo onCreateSupplCo={createSupplCo} />
       </div>
       <div className="list_section">
         <SolInstList solInsts={solInsts} />
         <MisList
-          mis={filterMis(mis, mis1)}
+          mis={filteredMis(mis)}
           solInsts={solInsts}
           onDisableMis={createMis}
           onEnableMis={createMis}
         />
+        <SupplCoList supplCo={supplCo} />
       </div>
     </>
   );

@@ -9,10 +9,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
 
-const CreateMis = ({ solInsts, onCreateMis }) => {
+const CreateSupplCo = ({ onCreateSupplCo }) => {
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,10 +18,6 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
-  const [solInstId, setSolInstId] = useState("");
-  const [instDropdownTitle, setInstDropdownTitle] = useState(
-    "Select a Solidarity Institution"
-  );
 
   const [show, setShow] = useState(false);
 
@@ -49,21 +43,11 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
     setEmail("");
     setAddress("");
     setContact("");
-    setSolInstId("");
-    setInstDropdownTitle("Select a Solidarity Institution");
   };
   const handleShow = () => setShow(true);
 
-  const createMis = () => {
-    if (
-      !username ||
-      !password ||
-      !name ||
-      !email ||
-      !address ||
-      !contact ||
-      !solInstId
-    ) {
+  const createSupplCo = () => {
+    if (!username || !password || !name || !email || !address || !contact) {
       alert("Empty fields!");
       return;
     }
@@ -75,20 +59,17 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
       }
     }
 
-    const newMis = {
+    const newSupplCo = {
       id: uuidv4(),
-      oldId: uuidv4(),
       username: username,
       password: password,
       name: name,
       email: email,
       address: address,
       contact: contact,
-      isEnabled: 1,
-      solInstId: solInstId,
     };
 
-    onCreateMis(newMis);
+    onCreateSupplCo(newSupplCo);
 
     handleClose();
   };
@@ -96,7 +77,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
   return (
     <>
       <Card onClick={() => handleShow()}>
-        <Card.Header className="cardTitle">Create MIS</Card.Header>
+        <Card.Header className="cardTitle">Create Supplier Company</Card.Header>
         <Card.Body>
           <Card.Text></Card.Text>
           <Card.Text></Card.Text>
@@ -110,7 +91,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create Member</Modal.Title>
+          <Modal.Title>Create Supplier Company</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -192,28 +173,6 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
                 />
               </Col>
             </Form.Group>
-
-            <DropdownButton title={instDropdownTitle}>
-              {solInsts.length === 0 ? (
-                <Dropdown.ItemText>
-                  No Solidarity Institutions
-                </Dropdown.ItemText>
-              ) : (
-                solInsts.map((solInst) => (
-                  <Dropdown.Item
-                    key={solInst.id}
-                    as="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setInstDropdownTitle(solInst.name);
-                      setSolInstId(solInst.id);
-                    }}
-                  >
-                    {solInst.name}
-                  </Dropdown.Item>
-                ))
-              )}
-            </DropdownButton>
           </Form>
         </Modal.Body>
 
@@ -221,7 +180,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => createMis()}>
+          <Button variant="primary" onClick={() => createSupplCo()}>
             Create
           </Button>
         </Modal.Footer>
@@ -230,4 +189,4 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
   );
 };
 
-export default CreateMis;
+export default CreateSupplCo;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import "./Admin.css";
 import Card from "react-bootstrap/Card";
@@ -25,6 +26,7 @@ const CreateSolInst = ({ onCreateSolInst }) => {
     }
 
     const newSolInst = {
+      id: uuidv4(),
       name: name,
       email: email,
       contact: contact,
