@@ -11,6 +11,8 @@ import Logout from "../components/Session/Logout";
 import Signup from "../components/Session/Signup";
 import Donations from "../components/Donations/Donations";
 import NavBar from "../components/NavBar/NavBar";
+import Supplco from "../components/SupplCo/SupplCo";
+
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/supplco" exact component={Supplco} />
+
       </BrowserRouter>
     </div>
   );

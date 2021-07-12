@@ -889,6 +889,49 @@ app.get("/get_all_BENEFITS", async (req, res) => {
     });
 });
 
+//Get Invoices
+app.get("/get_all_INVOICES", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.type === "INVOICE") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //Get Events by Solidarity Institution by Id
 app.post("/get_EVENTS_by_SOLINST", async (req, res) => {
   axios
@@ -1442,7 +1485,7 @@ app.get("/get_ORDERS_by_SUPPLCO", async (req, res) => {
 });
 
 //Get Invoices by Supplco Id
-app.get("/get_INVOICES_by_SUPPLCO", async (req, res) => {
+app.post("/get_INVOICES_by_SUPPLCO", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -1467,7 +1510,7 @@ app.get("/get_INVOICES_by_SUPPLCO", async (req, res) => {
           decodedPayload = JSON.parse(decodedPayload);
 
           if (
-            decodedPayload.dataType.type === "INVOICES" &&
+            decodedPayload.dataType.type === "INVOICE" &&
             decodedPayload.supplcoId === req.body.supplcoId
           ) {
             resPayloads.push(decodedPayload);
@@ -1539,12 +1582,13 @@ app.post("/create_INVOICE", async (req, res) => {
 
   const payload = {
     id: uuidv4(),
-    username: req.body.username,
-    password: req.body.password,
+    products: req.body.products,
+    amount: req.body.amount,
     dataType: {
       type: "INVOICE",
       subType: "INVOICE",
     },
+    supplcoId: req.body.supplcoId,
   };
 
   // Input for one transaction

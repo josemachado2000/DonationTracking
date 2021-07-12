@@ -82,6 +82,19 @@ const NavBar = ({ user }) => {
             ""
           )}
 
+          {user ? (
+            user.dataType.subType === "SUPPLCO" ? (
+              <>
+                <Navbar.Brand href="/supplco">Donation Tracking</Navbar.Brand>
+                <Nav.Link href="/supplco">Invoices</Nav.Link>
+              </>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
+
           {!user ? (
             <>
               <Nav.Link href="/login">Login</Nav.Link>

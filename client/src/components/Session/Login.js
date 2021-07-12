@@ -46,6 +46,9 @@ const Login = () => {
               history.push("/admin");
               history.go(0);
               break;
+            case "SUPPLCO":
+              history.push("/supplco");
+              history.go(0);
             default:
           }
         }
