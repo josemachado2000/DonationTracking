@@ -932,6 +932,49 @@ app.get("/get_all_INVOICES", async (req, res) => {
     });
 });
 
+//Get Orders
+app.get("/get_all_ORDERS", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (decodedPayload.dataType.type === "ORDERS") {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //Get Events by Solidarity Institution by Id
 app.post("/get_EVENTS_by_SOLINST", async (req, res) => {
   axios
@@ -1439,7 +1482,7 @@ app.get("/get_all_USERS", async (req, res) => {
 
 //TODO: SUPPLCO ENDPOINTS
 //Get Orders by Supplco Id
-app.get("/get_ORDERS_by_SUPPLCO", async (req, res) => {
+app.post("/get_ORDERS_by_SUPPLCO", async (req, res) => {
   axios
     .get(`${API_URL}/transactions`)
     .then((response) => {
@@ -1587,6 +1630,96 @@ app.post("/create_INVOICE", async (req, res) => {
     dataType: {
       type: "INVOICE",
       subType: "INVOICE",
+    },
+    supplcoId: req.body.supplcoId,
+  };
+
+  // Input for one transaction
+  const payloadBytes = Buffer.from(JSON.stringify(payload));
+
+  // Output we created with this transaction input
+
+  const transactionHeaderBytes = protobuf.TransactionHeader.encode({
+    familyName: TP_FAMILY,
+    familyVersion: TP_VERSION,
+    // Needs to be same as the expected address we create in contract
+    // If diffrent we wont get access to put state and get state of the address
+    inputs: [address],
+    outputs: [address],
+    signerPublicKey: signer.getPublicKey().asHex(),
+    batcherPublicKey: signer.getPublicKey().asHex(),
+    dependencies: [],
+    payloadSha512: createHash("sha512").update(payloadBytes).digest("hex"),
+  }).finish();
+
+  const signature = signer.sign(transactionHeaderBytes);
+
+  // Sign the transaction
+  const transaction = protobuf.Transaction.create({
+    header: transactionHeaderBytes,
+    headerSignature: signature,
+    payload: payloadBytes,
+  });
+
+  // Wrap it into list of transaction
+  const transactions = [transaction];
+
+  const batchHeaderBytes = protobuf.BatchHeader.encode({
+    signerPublicKey: signer.getPublicKey().asHex(),
+    transactionIds: transactions.map((txn) => txn.headerSignature),
+  }).finish();
+
+  // Wrap the transaction list into batch
+  const batchSignature = signer.sign(batchHeaderBytes);
+
+  // And sign it
+  const batch = protobuf.Batch.create({
+    header: batchHeaderBytes,
+    headerSignature: batchSignature,
+    transactions: transactions,
+  });
+
+  // Wrap them in batch list
+  const batchListBytes = protobuf.BatchList.encode({
+    batches: [batch],
+  }).finish();
+  axios
+    .post(`${API_URL}/batches`, batchListBytes, {
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+    .then((response) => {
+      console.log({
+        address,
+        TP_NAMESPACE,
+      });
+      console.log(response.data);
+
+      res.send({
+        message: "submitted",
+        data: response.data,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send({
+        message: "submitted",
+        error: error.response.data,
+      });
+    });
+});
+
+//Create Order
+app.post("/create_ORDER", async (req, res) => {
+  let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
+
+  const payload = {
+    id: uuidv4(),
+    description: req.body.description,
+    quantity: req.body.quantity,
+    date: req.body.date,
+    dataType: {
+      type: "ORDERS",
+      subType: "ORDERS",
     },
     supplcoId: req.body.supplcoId,
   };

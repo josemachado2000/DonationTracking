@@ -87,6 +87,7 @@ const NavBar = ({ user }) => {
               <>
                 <Navbar.Brand href="/supplco">Donation Tracking</Navbar.Brand>
                 <Nav.Link href="/supplco">Invoices</Nav.Link>
+                <Nav.Link href="/supplco/orders">Orders</Nav.Link>
               </>
             ) : (
               ""
