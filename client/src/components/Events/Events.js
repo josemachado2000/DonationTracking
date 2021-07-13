@@ -45,13 +45,13 @@ const Events = () => {
     });
 
     events = events.filter(function (item) {
-      console.log(item.id);
       return !eventsIds.includes(item.id);
     });
 
     return events;
   };
 
+  console.log(events);
   return (
     <>
       {donationSuccess ? (

@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import Modal from "react-bootstrap/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -28,7 +29,12 @@ const EventDetails = ({
   const [targetAmount, setTargetAmount] = useState(event.targetAmount);
   const [endDate, setEndDate] = useState(Date(event.endDate));
 
+  //Order Modal
+  const [orderDescription, setOrderDescription] = useState("");
+  const [orderDate, setOrderDate] = useState(Date());
+
   const [allowEdit, setAllowEdit] = useState(true);
+  const [show, setShow] = useState(false);
 
   const [benef, setBenef] = useState({});
 
@@ -83,8 +89,11 @@ const EventDetails = ({
         (new Date(endDate).getMonth() + 1) +
         "/" +
         new Date(endDate).getFullYear(),
+      isEnabled: event.isEnabled,
       misId: user.id,
       solInstId: user.solInstId,
+      benefId: event.benefId,
+      supplCoId: event.supplCoId,
     };
 
     try {
@@ -96,7 +105,6 @@ const EventDetails = ({
   };
 
   const progressBar = () => {
-    console.log(event);
     const now = ((event.currentAmount / event.targetAmount) * 100).toFixed(2);
     const progressInstance = (
       <ProgressBar
@@ -129,6 +137,42 @@ const EventDetails = ({
 
     onDisableEvent(newEvent);
   };
+
+  const createOrder = async (event) => {
+    if (!description || !orderDate) {
+      alert("Empty fields!");
+      return;
+    }
+    console.log(event);
+    const newOrder = {
+      id: uuidv4(),
+      // oldId: event.id,
+      description: orderDescription,
+      date:
+        new Date(orderDate).getDate() +
+        "/" +
+        (new Date(orderDate).getMonth() + 1) +
+        "/" +
+        new Date(orderDate).getFullYear(),
+      misId: user.id,
+      supplCoId: event.supplCoId,
+      eventId: event.id,
+    };
+
+    try {
+      await axios.post("http://localhost:8080/create_ORDER", newOrder);
+      handleClose();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClose = () => {
+    setShow(false);
+    setOrderDescription("");
+    setOrderDate(new Date());
+  };
+  const handleShow = () => setShow(true);
 
   return (
     <div
@@ -240,6 +284,62 @@ const EventDetails = ({
             </Col>
           </Form.Group>
         </Form.Group>
+
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>{event.name} - Order</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <Form>
+              <Form.Group as={Row} style={{ marginTop: "10px" }}>
+                <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
+                  Description
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    as="textarea"
+                    value={orderDescription}
+                    onChange={(e) => setOrderDescription(e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} style={{ marginTop: "10px" }}>
+                <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
+                  Date
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="text"
+                    readOnly
+                    value={
+                      new Date(orderDate).getDate() +
+                      "/" +
+                      (new Date(orderDate).getMonth() + 1) +
+                      "/" +
+                      new Date(orderDate).getFullYear()
+                    }
+                  />
+                </Col>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="secondary" onClick={() => createOrder(event)}>
+              Create Order
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Form>
       {component === "MisEvents.js" ? (
         allowEdit ? (
@@ -256,6 +356,15 @@ const EventDetails = ({
             >
               Edit
             </Button>
+
+            <Button
+              variant="btn btn-dark btn-sm"
+              onClick={() => handleShow()}
+              style={{ float: "right", marginTop: "20px" }}
+            >
+              Create Order
+            </Button>
+
             <Button
               variant="btn btn-dark btn-sm"
               onClick={() => disableEvent(event)}

@@ -11,9 +11,9 @@ import Logout from "../components/Session/Logout";
 import Signup from "../components/Session/Signup";
 import Donations from "../components/Donations/Donations";
 import NavBar from "../components/NavBar/NavBar";
-import Supplco from "../components/SupplCo/SupplCo";
+import Invoices from "../components/SupplCo/Invoices";
 import Orders from "../components/SupplCo/SupplCoOrders";
-
+import MisInvoices from "../components/Mis/MisInvoices";
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
         <Route path="/donations" exact component={Donations} />
 
         <Route path="/mis" exact component={MisEvents} />
+        <Route path="/mis/invoices" exact component={MisInvoices} />
 
         <Route path="/benef" exact component={Benef} />
 
@@ -37,10 +38,9 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/signup" exact component={Signup} />
-        <Route path="/supplco" exact component={Supplco} />
+
+        <Route path="/supplco" exact component={Invoices} />
         <Route path="/supplco/orders" exact component={Orders} />
-
-
       </BrowserRouter>
     </div>
   );

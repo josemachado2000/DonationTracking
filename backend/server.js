@@ -665,52 +665,6 @@ app.get("/get_all_BENEFS", async (req, res) => {
     });
 });
 
-//Get Invoices by Supplco Id
-app.get("/get_INVOICES_by_SUPPLCO", async (req, res) => {
-  axios
-    .get(`${API_URL}/transactions`)
-    .then((response) => {
-      return response.data.data;
-    })
-    .then((data) => {
-      let resPayloads = [];
-      data.forEach((element) => {
-        if (
-          element != data[data.length - 1] &&
-          element != data[data.length - 2] &&
-          element != data[data.length - 3]
-        ) {
-          let payload = element.payload;
-
-          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
-          console.log(
-            decodedPayload +
-              "\n---------------------------------------------------------------------"
-          );
-
-          decodedPayload = JSON.parse(decodedPayload);
-
-          if (
-            decodedPayload.dataType.type === "INVOICES" &&
-            decodedPayload.supplcoId === req.body.supplcoId
-          ) {
-            resPayloads.push(decodedPayload);
-          }
-        }
-      });
-
-      console.log(
-        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
-          JSON.stringify(resPayloads) +
-          "\n---------------------------------------------------------------------\n"
-      );
-      res.send(resPayloads);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
 //TODO: BENEF ENDPOINTS
 //Get Benefits
 app.post("/get_BENEFITS_by_BENEF", async (req, res) => {
@@ -1569,7 +1523,7 @@ app.post("/get_ORDERS_by_SUPPLCO", async (req, res) => {
 
           if (
             decodedPayload.dataType.type === "ORDERS" &&
-            decodedPayload.supplcoId === req.body.supplcoId
+            decodedPayload.supplCoId === req.body.supplCoId
           ) {
             resPayloads.push(decodedPayload);
           }
@@ -1615,7 +1569,53 @@ app.post("/get_INVOICES_by_SUPPLCO", async (req, res) => {
 
           if (
             decodedPayload.dataType.type === "INVOICE" &&
-            decodedPayload.supplcoId === req.body.supplcoId
+            decodedPayload.supplCoId === req.body.supplCoId
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//Get Invoices by Order
+app.post("/get_INVOICE_by_ORDER", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.type === "INVOICE" &&
+            decodedPayload.orderId === req.body.orderId
           ) {
             resPayloads.push(decodedPayload);
           }
@@ -1685,14 +1685,20 @@ app.post("/create_INVOICE", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
-    id: uuidv4(),
-    products: req.body.products,
+    id: req.body.id,
+    oldId: req.body.oldId,
+    description: req.body.description,
     amount: req.body.amount,
+    date: req.body.date,
+    isPaid: req.body.isPaid,
     dataType: {
       type: "INVOICE",
       subType: "INVOICE",
     },
-    supplcoId: req.body.supplcoId,
+    misId: req.body.misId,
+    supplCoId: req.body.supplCoId,
+    eventId: req.body.eventId,
+    orderId: req.body.orderId,
   };
 
   // Input for one transaction
@@ -1774,15 +1780,16 @@ app.post("/create_ORDER", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
-    id: uuidv4(),
+    id: req.body.id,
     description: req.body.description,
-    quantity: req.body.quantity,
     date: req.body.date,
     dataType: {
       type: "ORDERS",
       subType: "ORDERS",
     },
-    supplcoId: req.body.supplcoId,
+    misId: req.body.misId,
+    supplCoId: req.body.supplCoId,
+    eventId: req.body.eventId,
   };
 
   // Input for one transaction
@@ -1959,12 +1966,12 @@ app.post("/create_EVENT", async (req, res) => {
     });
 });
 
-//Create BENEFITS
-app.post("/create_BENEFITS", async (req, res) => {
+//Create BENEFIT
+app.post("/create_BENEFIT", async (req, res) => {
   let address = TP_NAMESPACE + _hash("sampleKey").substr(0, 64);
 
   const payload = {
-    id: uuidv4(),
+    id: req.body.id,
     date: req.body.date,
     description: req.body.description,
     value: req.body.value,
@@ -2077,6 +2084,98 @@ app.post("/get_EVENT_by_Id", async (req, res) => {
           if (
             decodedPayload.dataType.type === "EVENT" &&
             decodedPayload.id === req.body.eventId
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//Get Invoices by Mis Id
+app.post("/get_INVOICES_by_MIS", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.type === "INVOICE" &&
+            decodedPayload.misId === req.body.misId
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//Get Mis by Id
+app.post("/get_MIS_by_Id", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.subType === "MIS" &&
+            decodedPayload.id === req.body.misId
           ) {
             resPayloads.push(decodedPayload);
           }
@@ -2302,6 +2401,53 @@ app.post("/get_DONATIONS_by_DONOR", async (req, res) => {
           if (
             decodedPayload.dataType.type === "DONATION" &&
             decodedPayload.donorId === req.body.donorId
+          ) {
+            resPayloads.push(decodedPayload);
+          }
+        }
+      });
+
+      console.log(
+        "--------------------------- PAYLOADS ARRAY --------------------------\n" +
+          JSON.stringify(resPayloads) +
+          "\n---------------------------------------------------------------------\n"
+      );
+      res.send(resPayloads);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+//TODO: SOLINST ENDPOINTS
+//Get SolInst by Id
+app.post("/get_SOLINST_by_Id", async (req, res) => {
+  axios
+    .get(`${API_URL}/transactions`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .then((data) => {
+      let resPayloads = [];
+      data.forEach((element) => {
+        if (
+          element != data[data.length - 1] &&
+          element != data[data.length - 2] &&
+          element != data[data.length - 3]
+        ) {
+          let payload = element.payload;
+
+          let decodedPayload = Buffer.from(payload, "base64").toString("utf-8");
+          console.log(
+            decodedPayload +
+              "\n---------------------------------------------------------------------"
+          );
+
+          decodedPayload = JSON.parse(decodedPayload);
+
+          if (
+            decodedPayload.dataType.type === "SOLINST" &&
+            decodedPayload.id === req.body.solInstId
           ) {
             resPayloads.push(decodedPayload);
           }

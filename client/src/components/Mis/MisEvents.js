@@ -94,6 +94,7 @@ const MisEvents = () => {
     }
   };
 
+  console.log(events);
   return (
     <Router>
       <div className="eventsList">
@@ -109,7 +110,7 @@ const MisEvents = () => {
         <h3 className="events_title">Events</h3>
 
         {filteredEvents(events).length === 0 ? (
-          <h6>Este Mis nao tem eventos</h6>
+          <h6>There are no events</h6>
         ) : (
           filteredEvents(events).map((event) =>
             event.isEnabled === 1 ? (

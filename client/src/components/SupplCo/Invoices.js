@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Invoices = () => {
   const [invoices, setInvoices] = useState([]);
-  const [supplco] = useState(JSON.parse(localStorage.getItem("loggedUser")));
+  const [supplCo] = useState(JSON.parse(localStorage.getItem("loggedUser")));
 
   useEffect(() => {
     const getInvoices = async () => {
@@ -18,21 +18,33 @@ const Invoices = () => {
   }, []);
 
   const fetchInvoices = async () => {
-    //const benefId = { benefId: benef.id };
-    const supplcoId = { supplcoId: supplco.id };
+    const supplCoId = { supplCoId: supplCo.id };
     const response = await axios.post(
       "http://localhost:8080/get_INVOICES_by_SUPPLCO",
-      supplcoId
+      supplCoId
     );
     return response.data;
+  };
+
+  const filteredInvoices = (invoices) => {
+    var invoicesIds = [];
+    invoices.forEach((i) => {
+      invoicesIds.push(i.oldId);
+    });
+
+    invoices = invoices.filter(function (item) {
+      return !invoicesIds.includes(item.id);
+    });
+
+    return invoices;
   };
 
   return (
     <>
       <div className="invoicesList">
         <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Invoices</h3>
-        {invoices.map((invoice) => (
-          <Invoice key={invoice.id} invoice={invoice} />
+        {filteredInvoices(invoices).map((invoice) => (
+          <Invoice key={invoice.id} invoice={invoice} component="SupplCo.js" />
         ))}
       </div>
     </>

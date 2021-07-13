@@ -37,6 +37,7 @@ const NavBar = ({ user }) => {
               <>
                 <Navbar.Brand href="/mis">Donation Tracking</Navbar.Brand>
                 <Nav.Link href="/mis">Events</Nav.Link>
+                <Nav.Link href="/mis/invoices">Invoices</Nav.Link>
               </>
             ) : (
               ""
@@ -58,7 +59,7 @@ const NavBar = ({ user }) => {
             ""
           )}
 
-          {user ? (
+          {/* {user ? (
             user.dataType.subType === "MIS" ||
             user.dataType.subType === "DONOR" ? (
               <Nav.Link href="/profile">Profile</Nav.Link>
@@ -67,7 +68,7 @@ const NavBar = ({ user }) => {
             )
           ) : (
             ""
-          )}
+          )} */}
 
           {user ? (
             user.dataType.subType === "ADMIN" ? (
