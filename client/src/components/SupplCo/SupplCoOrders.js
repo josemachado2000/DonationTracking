@@ -26,14 +26,26 @@ const Orders = () => {
     console.log(response.data);
     return response.data;
   };
-  console.log(orders);
+
   return (
     <>
       <div className="ordersList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Orders</h3>
-        {orders.map((order) => (
-          <Order key={order.id} order={order} />
-        ))}
+        <h3
+          style={{
+            paddingTop: "20px",
+            paddingLeft: "40px",
+            fontWeight: "bold",
+          }}
+        >
+          Orders
+        </h3>
+        {orders.length === 0 ? (
+          <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+            There are no orders
+          </h6>
+        ) : (
+          orders.map((order) => <Order key={order.id} order={order} />)
+        )}
       </div>
     </>
   );

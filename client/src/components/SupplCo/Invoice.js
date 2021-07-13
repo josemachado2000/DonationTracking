@@ -1,6 +1,8 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+import "./Invoices.css";
+
 const Invoice = ({ invoice, component, onPayInvoice }) => {
   const payInvoice = (invoice) => {
     onPayInvoice(invoice);
@@ -9,12 +11,21 @@ const Invoice = ({ invoice, component, onPayInvoice }) => {
   return (
     <div className="supplco_invoiceDetails">
       <div className="invoice">
-        <Card>
-          <Card.Header className="cardTitle">{invoice.amount}</Card.Header>
-          <Card.Body>
-            <Card.Text>{invoice.description}</Card.Text>
-            <Card.Text>{invoice.date}</Card.Text>
-            <Card.Text>{invoice.isPaid === 1 ? "PAID" : "FOR PAY"}</Card.Text>
+        <Card className="invoice-card">
+          <Card.Header className="cardTitle">
+            <h5>Invoice Date: {invoice.date}</h5>
+          </Card.Header>
+          <Card.Header className="cardTitle">
+            <h5>State: {invoice.isPaid === 1 ? "PAID" : "FOR PAY"}</h5>
+          </Card.Header>
+
+          <Card.Body className="invoice-card-body">
+            <Card.Text>
+              <h5>Description: {invoice.description}</h5>
+            </Card.Text>
+            <Card.Text>
+              <h5>Amount: {invoice.amount}€</h5>
+            </Card.Text>
           </Card.Body>
 
           {component === "MisInvoices.js" ? (

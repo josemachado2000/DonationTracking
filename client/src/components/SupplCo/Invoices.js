@@ -42,10 +42,28 @@ const Invoices = () => {
   return (
     <>
       <div className="invoicesList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Invoices</h3>
-        {filteredInvoices(invoices).map((invoice) => (
-          <Invoice key={invoice.id} invoice={invoice} component="SupplCo.js" />
-        ))}
+        <h3
+          style={{
+            paddingTop: "20px",
+            paddingLeft: "40px",
+            fontWeight: "bold",
+          }}
+        >
+          Invoices
+        </h3>
+        {filteredInvoices(invoices).length === 0 ? (
+          <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+            There are no invoices
+          </h6>
+        ) : (
+          filteredInvoices(invoices).map((invoice) => (
+            <Invoice
+              key={invoice.id}
+              invoice={invoice}
+              component="SupplCo.js"
+            />
+          ))
+        )}
       </div>
     </>
   );

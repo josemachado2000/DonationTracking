@@ -30,9 +30,15 @@ const Benefits = () => {
     <>
       <div className="benefitsList">
         <h3 className="benefitsTitle">Benefits</h3>
-        {benefits.map((benefit) => (
-          <Benefit key={benefit.id} benefit={benefit} />
-        ))}
+        {benefits.length === 0 ? (
+          <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+            There are no benefits
+          </h6>
+        ) : (
+          benefits.map((benefit) => (
+            <Benefit key={benefit.id} benefit={benefit} />
+          ))
+        )}
       </div>
     </>
   );

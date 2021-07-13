@@ -110,7 +110,9 @@ const MisEvents = () => {
         <h3 className="events_title">Events</h3>
 
         {filteredEvents(events).length === 0 ? (
-          <h6>There are no events</h6>
+          <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+            There are no events
+          </h6>
         ) : (
           filteredEvents(events).map((event) =>
             event.isEnabled === 1 ? (

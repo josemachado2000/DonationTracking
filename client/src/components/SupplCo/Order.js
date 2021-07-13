@@ -3,6 +3,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router";
 
+import "./Invoices.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -91,6 +92,7 @@ const Order = ({ order }) => {
       eventId: order.eventId,
       orderId: order.id,
     };
+
     try {
       await axios.post("http://localhost:8080/create_INVOICE", newInvoice);
       handleClose();
@@ -104,25 +106,28 @@ const Order = ({ order }) => {
   return (
     <div className="supplco_invoiceDetails">
       <div className="invoice">
-        <Card>
+        <Card className="invoice-card">
           {event[0] ? (
-            <Card.Header className="cardTitle">{event[0].name}</Card.Header>
+            <Card.Header className="cardTitle order-card-title">
+              {event[0].name}
+            </Card.Header>
           ) : (
             ""
           )}
-          {mis[0] ? (
-            <Card.Header className="cardTitle">{mis[0].name}</Card.Header>
+          {mis[0] && solInst[0] ? (
+            <Card.Header className="cardTitle order-card-title">
+              {solInst[0].name} - {mis[0].name}
+            </Card.Header>
           ) : (
             ""
           )}
-          {solInst[0] ? (
-            <Card.Header className="cardTitle">{solInst[0].name}</Card.Header>
-          ) : (
-            ""
-          )}
-          <Card.Body>
-            <Card.Text>{order.description}</Card.Text>
-            <Card.Text>{order.date}</Card.Text>
+          <Card.Body className="invoice-card-body">
+            <Card.Text>
+              <h5>Description: {order.description}</h5>
+            </Card.Text>
+            <Card.Text>
+              <h5>Order Date: {order.date}</h5>
+            </Card.Text>
           </Card.Body>
 
           <Modal

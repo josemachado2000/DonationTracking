@@ -29,9 +29,13 @@ const Donations = () => {
   return (
     <>
       <h3 className="donationsTitle">My Donations</h3>
-      {donations.map((donation) => (
-        <Donation donation={donation} />
-      ))}
+      {donations.length === 0 ? (
+        <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+          There are no donations
+        </h6>
+      ) : (
+        donations.map((donation) => <Donation donation={donation} />)
+      )}
     </>
   );
 };

@@ -71,7 +71,7 @@ const MisInvoices = () => {
         (new Date().getMonth() + 1) +
         "/" +
         new Date().getFullYear(),
-      description: `Benefit from "${event.name}" event`,
+      description: `Benefit from "${event.name}" Event`,
       value: invoice.description,
       dataType: {
         type: "BENEFIT",
@@ -92,15 +92,29 @@ const MisInvoices = () => {
   return (
     <>
       <div className="ordersList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Invoices</h3>
-        {filteredInvoices(invoices).map((invoice) => (
-          <Invoice
-            key={invoice.id}
-            invoice={invoice}
-            component="MisInvoices.js"
-            onPayInvoice={onPayInvoice}
-          />
-        ))}
+        <h3
+          style={{
+            paddingTop: "20px",
+            paddingLeft: "40px",
+            fontWeight: "bold",
+          }}
+        >
+          Invoices
+        </h3>
+        {filteredInvoices(invoices).length === 0 ? (
+          <h6 style={{ marginLeft: "40px", marginTop: "20px" }}>
+            There are no invoices
+          </h6>
+        ) : (
+          filteredInvoices(invoices).map((invoice) => (
+            <Invoice
+              key={invoice.id}
+              invoice={invoice}
+              component="MisInvoices.js"
+              onPayInvoice={onPayInvoice}
+            />
+          ))
+        )}
       </div>
     </>
   );

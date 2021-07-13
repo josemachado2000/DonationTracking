@@ -182,22 +182,31 @@ const EventDetails = ({
     >
       <Form>
         <Form.Group as={Row} style={{ marginBottom: "10px" }}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
+          <Form.Label
+            column
+            sm="2"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
+          >
             Title
           </Form.Label>
           <Col sm="10">
             <Form.Control
+              as="textarea"
               plaintext
               readOnly={allowEdit}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: "100% !important" }}
+              style={{ height: "fit-content" }}
             />
           </Col>
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
+          <Form.Label
+            column
+            sm="2"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
+          >
             Description
           </Form.Label>
           <Col sm="10">
@@ -213,7 +222,11 @@ const EventDetails = ({
 
         <Form.Group as={Row}>
           <Form.Group as={Col} style={{ padding: "0px" }}>
-            <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
+            <Form.Label
+              column
+              sm="10"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               Target Reason
             </Form.Label>
             <Col sm="10">
@@ -227,7 +240,11 @@ const EventDetails = ({
           </Form.Group>
 
           <Form.Group as={Col} style={{ padding: "0px" }}>
-            <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
+            <Form.Label
+              column
+              sm="10"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               Target Amount
             </Form.Label>
             <Col sm="10" style={{ display: "flex" }}>
@@ -237,14 +254,18 @@ const EventDetails = ({
                 value={targetAmount}
                 onChange={(e) => setTargetAmount(e.target.value)}
               />
-              <InputGroup.Text style={{ width: "5%" }}>€</InputGroup.Text>
+              <InputGroup.Text style={{ width: "7%" }}>€</InputGroup.Text>
             </Col>
           </Form.Group>
         </Form.Group>
 
         <Form.Group as={Row} style={{ marginBottom: "10px" }}>
           <Form.Group as={Col} style={{ padding: "0px" }}>
-            <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
+            <Form.Label
+              column
+              sm="10"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               Beneficiary
             </Form.Label>
             <Col sm="10">
@@ -257,7 +278,11 @@ const EventDetails = ({
 
         <Form.Group as={Row}>
           <Form.Group as={Col} style={{ padding: "0px" }}>
-            <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
+            <Form.Label
+              column
+              sm="10"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               Begin Date
             </Form.Label>
             <Col sm="10">
@@ -266,7 +291,11 @@ const EventDetails = ({
           </Form.Group>
 
           <Form.Group as={Col} style={{ padding: "0px" }}>
-            <Form.Label column sm="10" style={{ fontWeight: "bold" }}>
+            <Form.Label
+              column
+              sm="10"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               End Date
             </Form.Label>
             <Col sm="10">
@@ -279,6 +308,7 @@ const EventDetails = ({
                   todayButton="Today"
                   dateFormat="dd/MM/yyyy"
                   onChange={(date) => setEndDate(date)}
+                  style={{ width: "100%" }}
                 />
               )}
             </Col>
@@ -357,21 +387,22 @@ const EventDetails = ({
               Edit
             </Button>
 
-            <Button
-              variant="btn btn-dark btn-sm"
-              onClick={() => handleShow()}
-              style={{ float: "right", marginTop: "20px" }}
-            >
-              Create Order
-            </Button>
+            <div style={{ float: "right", marginTop: "20px" }}>
+              <Button
+                variant="btn btn-dark btn-sm"
+                onClick={() => disableEvent(event)}
+                style={{ marginRight: "10px" }}
+              >
+                Disable
+              </Button>
 
-            <Button
-              variant="btn btn-dark btn-sm"
-              onClick={() => disableEvent(event)}
-              style={{ float: "right", marginTop: "20px" }}
-            >
-              Disable
-            </Button>
+              <Button
+                variant="btn btn-dark btn-sm"
+                onClick={() => handleShow()}
+              >
+                Create Order
+              </Button>
+            </div>
           </>
         ) : (
           <>
@@ -396,6 +427,7 @@ const EventDetails = ({
                 marginTop: "20px",
                 width: "fit-content",
                 alignSelf: "center",
+                float: "right",
               }}
             >
               Save
