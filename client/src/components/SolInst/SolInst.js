@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "./SolInst.css";
 import Card from "react-bootstrap/Card";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import SolInstEvents from "./SolInstEvents";
 
@@ -12,28 +14,37 @@ const SolInst = ({ solInst }) => {
   return (
     <Router>
       <div className="solInsts">
-        <Card>
-          <Card.Header className="cardTitle">{solInst.id}</Card.Header>
+        <Card className="solInst-card">
+          <Card.Header className="cardTitle">{solInst.name}</Card.Header>
           <Card.Body>
-            <Card.Text>{solInst.name}</Card.Text>
             {showSolInstEvents === false ? (
               <div className="cardButton">
                 <Link
                   to="/solidarity_institutions/events"
-                  className="btn btn-primary"
+                  className="btn btn-dark btn-sm"
                   onClick={() => setShowSolInstEvents(!showSolInstEvents)}
                 >
                   Events
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    size="lg"
+                    style={{ marginLeft: "10px" }}
+                  />
                 </Link>
               </div>
             ) : (
               <div className="cardButton">
                 <Link
                   to="/solidarity_institutions"
-                  className="btn btn-primary"
+                  className="btn btn-dark btn-sm"
                   onClick={() => setShowSolInstEvents(!showSolInstEvents)}
                 >
                   Fechar
+                  <FontAwesomeIcon
+                    icon={faChevronUp}
+                    size="lg"
+                    style={{ marginLeft: "10px" }}
+                  />
                 </Link>
               </div>
             )}

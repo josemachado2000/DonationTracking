@@ -2,6 +2,11 @@
 .eventsList {
   width: 100%;
 }
+.eventsTitle {
+  margin-left: 40px;
+  margin-top: 20px;
+  font-weight: bold;
+}
 /* Event-EventDetails */
 .event_eventDetails {
   width: 100%;
@@ -29,8 +34,18 @@
 }
 
 /* Event Card */
-.cardTitle {
-  font-size: 20px;
+.event-card {
+  font-size: 18px !important;
+  margin: 20px !important;
+  margin-top: 0px !important;
+  width: 96% !important;
+  height: fit-content !important;
+}
+.event-cardBody {
+  width: 100%;
+}
+.event-cardTitle {
+  font-size: 20px !important;
   font-weight: bold;
 }
 .cardButton {
@@ -87,6 +102,13 @@
 }
 
 input {
-  border: 0 !important;
-  background-color: lightgray;
+  width: auto !important;
+  border-radius: 10px !important;
+  padding: 5px !important;
+  background-color: rgb(233, 233, 233) !important;
+}
+textarea {
+  border-radius: 10px !important;
+  padding: 5px !important;
+  background-color: rgb(233, 233, 233) !important;
 }

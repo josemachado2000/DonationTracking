@@ -3,36 +3,44 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "./Mis.css";
 import Card from "react-bootstrap/Card";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EventDetails from "../Events/EventDetails";
 
-const MisEvent = ({ event }) => {
+const MisEvent = ({ event, onDisableEvent }) => {
   const [showMisEvent, setMistEvent] = useState(false);
 
   return (
     <Router>
       <div className="mis-events">
-        <Card>
+        <Card className="mis-event-card">
           <Card.Header className="cardTitle">
             {event.name}
             {showMisEvent === false ? (
               <div className="cardButton">
                 <Link
                   to="/mis/events/event"
-                  className="btn btn-primary"
                   onClick={() => setMistEvent(!showMisEvent)}
                 >
-                  Mostrar
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    size="lg"
+                    style={{ marginLeft: "10px", color: "black" }}
+                  />
                 </Link>
               </div>
             ) : (
               <div className="cardButton">
                 <Link
                   to="/mis/events"
-                  className="btn btn-primary"
                   onClick={() => setMistEvent(!showMisEvent)}
                 >
-                  Fechar
+                  <FontAwesomeIcon
+                    icon={faChevronUp}
+                    size="lg"
+                    style={{ marginLeft: "10px", color: "black" }}
+                  />
                 </Link>
               </div>
             )}
@@ -41,7 +49,11 @@ const MisEvent = ({ event }) => {
             <Route
               path="/mis/events/event"
               render={() => (
-                <EventDetails event={event} component={"MisEvents.js"} />
+                <EventDetails
+                  event={event}
+                  component={"MisEvents.js"}
+                  onDisableEvent={onDisableEvent}
+                />
               )}
             />
           ) : (

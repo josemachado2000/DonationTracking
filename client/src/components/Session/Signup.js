@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useHistory } from "react-router";
 
+import "./Session.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -110,13 +111,21 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <Form>
+    <div className="signup_page">
+      <h3 className="loginTitle">Sign Up</h3>
+
+      <Form className="loginForm">
         <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Username
-          </Form.Label>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Username
+            </Form.Label>
+
             <Form.Control
               type="text"
               value={username}
@@ -125,11 +134,17 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Password
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Password
+            </Form.Label>
+
             <Form.Control
               type="password"
               value={password}
@@ -138,11 +153,17 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            name
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Name
+            </Form.Label>
+
             <Form.Control
               type="text"
               value={name}
@@ -151,11 +172,17 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Birthdate
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Birthdate
+            </Form.Label>
+
             <DatePicker
               selected={birthdate}
               todayButton="Today"
@@ -165,11 +192,16 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Email
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Email
+            </Form.Label>
             <Form.Control
               type="email"
               value={email}
@@ -178,11 +210,17 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Address
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Address
+            </Form.Label>
+
             <Form.Control
               type="text"
               value={address}
@@ -191,11 +229,17 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Contact
-          </Form.Label>
+        <Form.Group as={Row} style={{ marginTop: "10px" }}>
           <Col sm="10">
+            <Form.Label
+              column
+              sm="2"
+              className="signupLabels"
+              style={{ fontWeight: "bold" }}
+            >
+              Contact
+            </Form.Label>
+
             <Form.Control
               type="number"
               value={contact}
@@ -204,7 +248,11 @@ const Signup = () => {
           </Col>
         </Form.Group>
 
-        <DropdownButton title={nacionalityDropdownTitle}>
+        <DropdownButton
+          title={nacionalityDropdownTitle}
+          variant={"secondary"}
+          style={{ marginTop: "20px" }}
+        >
           {nacionalities.map((nac) => (
             <Dropdown.Item
               key={nac}
@@ -221,10 +269,14 @@ const Signup = () => {
         </DropdownButton>
       </Form>
 
-      <Button variant="primary" onClick={() => createDonor()}>
+      <Button
+        variant="secondary"
+        onClick={() => createDonor()}
+        style={{ marginTop: "20px" }}
+      >
         Sign Up
       </Button>
-    </>
+    </div>
   );
 };
 

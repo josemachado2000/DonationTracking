@@ -3,36 +3,44 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "./SolInst.css";
 import Card from "react-bootstrap/Card";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EventDetails from "../Events/EventDetails";
 
-const SolInstEvent = ({ event }) => {
+const SolInstEvent = ({ event, onDonate }) => {
   const [showSolInstEvent, setShowSolInstEvent] = useState(false);
 
   return (
     <Router>
       <div className="solInsts-events">
-        <Card>
-          <Card.Header className="cardTitle">
+        <Card className="solInst-event-card">
+          <Card.Header className="solInst-event-card-title">
             {event.name}
             {showSolInstEvent === false ? (
               <div className="cardButton">
                 <Link
                   to="/solidarity_institutions/events/event"
-                  className="btn btn-primary"
                   onClick={() => setShowSolInstEvent(!showSolInstEvent)}
                 >
-                  Mostrar
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    size="lg"
+                    style={{ marginLeft: "10px", color: "black" }}
+                  />
                 </Link>
               </div>
             ) : (
               <div className="cardButton">
                 <Link
                   to="/solidarity_institutions/events"
-                  className="btn btn-primary"
                   onClick={() => setShowSolInstEvent(!showSolInstEvent)}
                 >
-                  Fechar
+                  <FontAwesomeIcon
+                    icon={faChevronUp}
+                    size="lg"
+                    style={{ marginLeft: "10px", color: "black" }}
+                  />
                 </Link>
               </div>
             )}
@@ -40,7 +48,7 @@ const SolInstEvent = ({ event }) => {
           {showSolInstEvent ? (
             <Route
               path="/solidarity_institutions/events/event"
-              render={() => <EventDetails event={event} />}
+              render={() => <EventDetails event={event} onDonate={onDonate} />}
             />
           ) : (
             ""

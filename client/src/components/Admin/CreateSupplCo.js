@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateSupplCo = ({ onCreateSupplCo }) => {
   const [users, setUsers] = useState([]);
@@ -79,8 +81,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
       <Card onClick={() => handleShow()}>
         <Card.Header className="cardTitle">Create Supplier Company</Card.Header>
         <Card.Body>
-          <Card.Text></Card.Text>
-          <Card.Text></Card.Text>
+          <FontAwesomeIcon icon={faUser} size="10x" style={{ color: "gray" }} />
         </Card.Body>
       </Card>
 
@@ -109,7 +110,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Password
               </Form.Label>
@@ -122,7 +123,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 name
               </Form.Label>
@@ -135,7 +136,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Email
               </Form.Label>
@@ -148,7 +149,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Address
               </Form.Label>
@@ -161,7 +162,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Contact
               </Form.Label>
@@ -180,7 +181,7 @@ const CreateSupplCo = ({ onCreateSupplCo }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => createSupplCo()}>
+          <Button variant="secondary" onClick={() => createSupplCo()}>
             Create
           </Button>
         </Modal.Footer>

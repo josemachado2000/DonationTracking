@@ -4,13 +4,14 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import "./Mis.css";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import MisEvent from "./MisEvent";
 import AddEvent from "./AddEvent";
 
 const MisEvents = () => {
   const [events, setEvents] = useState([]);
-  const [events1, setEvents1] = useState([]);
   const [mis] = useState(JSON.parse(localStorage.getItem("loggedUser")));
 
   useEffect(() => {
@@ -19,12 +20,6 @@ const MisEvents = () => {
       setEvents(events);
     };
     getEvents();
-
-    const getEvents1 = async () => {
-      const events = await fetchEvents();
-      setEvents1(events);
-    };
-    getEvents1();
   }, []);
 
   const fetchEvents = async () => {
@@ -38,25 +33,23 @@ const MisEvents = () => {
     return response.data;
   };
 
-  const filterEvents = (array1, array2) => {
-    //console.log(array1);
-    //console.log(array2);
-    for (var ar1 of array1) {
-      for (var ar2 of array2) {
-        //console.log(ar1.oldId + "           " + ar2.id);
-        if (ar1.oldId === ar2.id) {
-          //console.log("Corta: " + ar2.id);
-          array2.splice(array2.indexOf(ar2), 1);
-          break;
-        }
-      }
-    }
-    //console.log(array2);
-    return array2;
+  const filteredEvents = (events) => {
+    var eventsIds = [];
+    events.forEach((e) => {
+      eventsIds.push(e.oldId);
+    });
+
+    events = events.filter(function (item) {
+      return !eventsIds.includes(item.id);
+    });
+
+    return events;
   };
 
   const addEvent = async (event) => {
+    console.log(event);
     const newEvent = {
+      id: uuidv4(),
       oldId: uuidv4(),
       name: event.name,
       description: event.description,
@@ -75,35 +68,60 @@ const MisEvents = () => {
         (event.endDate.getMonth() + 1) +
         "/" +
         event.endDate.getFullYear(),
+      isEnabled: 1,
       misId: mis.id,
-      solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
+      solInstId: mis.solInstId,
+      benefId: event.benefId,
+      supplCoId: event.supplCoId,
     };
 
-    const response = await axios.post(
-      "http://localhost:8080/create_EVENT",
-      newEvent
-    );
+    try {
+      await axios.post("http://localhost:8080/create_EVENT", newEvent);
 
-    if (response.status === 200) {
-      setEvents1([...events1, newEvent]);
+      setEvents([...events, newEvent]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onDisableEvent = async (newEvent) => {
+    try {
+      await axios.post("http://localhost:8080/create_EVENT", newEvent);
+
+      setEvents([...events, newEvent]);
+    } catch (e) {
+      console.log(e);
     }
   };
 
   return (
     <Router>
       <div className="eventsList">
-        <div className="events_title_addEvent">
-          <h3 className="events_title">Events</h3>
-          <Link to="/mis/events/addEvent" className="btn btn-primary addEvent">
-            Add Event
-          </Link>
-        </div>
-        {filterEvents(events, events1).length === 0 ? (
+        <Link to="/mis/events/addEvent" className="addEvent">
+          <FontAwesomeIcon
+            icon={faPlusCircle}
+            size="lg"
+            style={{ color: "gray" }}
+          />{" "}
+          Add Event
+        </Link>
+
+        <h3 className="events_title">Events</h3>
+
+        {filteredEvents(events).length === 0 ? (
           <h6>Este Mis nao tem eventos</h6>
         ) : (
-          filterEvents(events, events1).map((event) => (
-            <MisEvent key={event.id} event={event} />
-          ))
+          filteredEvents(events).map((event) =>
+            event.isEnabled === 1 ? (
+              <MisEvent
+                key={event.id}
+                event={event}
+                onDisableEvent={onDisableEvent}
+              />
+            ) : (
+              ""
+            )
+          )
         )}
       </div>
       <Route

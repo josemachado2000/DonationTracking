@@ -73,7 +73,7 @@ const NavBar = ({ user }) => {
             user.dataType.subType === "ADMIN" ? (
               <>
                 <Navbar.Brand href="/admin">Donation Tracking</Navbar.Brand>
-                <Nav.Link href="/invoices">Invoices</Nav.Link>
+                {/* <Nav.Link href="/invoices">Invoices</Nav.Link> */}
               </>
             ) : (
               ""
@@ -95,11 +95,16 @@ const NavBar = ({ user }) => {
           ) : (
             ""
           )}
-
+        </Nav>
+        <Nav>
           {!user ? (
             <>
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">Sign Up</Nav.Link>
+              <Nav.Item>
+                <Nav.Link href="/login">Login</Nav.Link>
+              </Nav.Item>
+              <Nav.Item className="ml-auto">
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+              </Nav.Item>
             </>
           ) : (
             ""

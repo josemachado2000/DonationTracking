@@ -7,3 +7,21 @@
   padding: 20px;
   padding-top: 0px;
 }
+.solInsts-title {
+  margin-left: 40px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+.solInst-card {
+  margin-top: 0px !important;
+  width: 100% !important;
+  height: fit-content !important;
+}
+.solInst-event-card {
+  width: 97.5% !important;
+  height: fit-content !important;
+}
+.solInst-event-card-title {
+  font-size: 20px !important;
+  font-weight: bold;
+}

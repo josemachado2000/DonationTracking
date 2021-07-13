@@ -11,6 +11,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateMis = ({ solInsts, onCreateMis }) => {
   const [users, setUsers] = useState([]);
@@ -84,7 +86,6 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
       email: email,
       address: address,
       contact: contact,
-      isEnabled: 1,
       solInstId: solInstId,
     };
 
@@ -99,6 +100,9 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
         <Card.Header className="cardTitle">
           Create Member of Solidarity Institution
         </Card.Header>
+        <Card.Body>
+          <FontAwesomeIcon icon={faUser} size="10x" style={{ color: "gray" }} />
+        </Card.Body>
       </Card>
 
       <Modal
@@ -126,7 +130,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Password
               </Form.Label>
@@ -139,7 +143,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 name
               </Form.Label>
@@ -152,7 +156,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Email
               </Form.Label>
@@ -165,7 +169,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Address
               </Form.Label>
@@ -178,7 +182,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Contact
               </Form.Label>
@@ -191,7 +195,11 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
               </Col>
             </Form.Group>
 
-            <DropdownButton title={instDropdownTitle}>
+            <DropdownButton
+              title={instDropdownTitle}
+              variant="secondary"
+              style={{ marginTop: "20px" }}
+            >
               {solInsts.length === 0 ? (
                 <Dropdown.ItemText>
                   No Solidarity Institutions
@@ -219,7 +227,7 @@ const CreateMis = ({ solInsts, onCreateMis }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => createMis()}>
+          <Button variant="secondary" onClick={() => createMis()}>
             Create
           </Button>
         </Modal.Footer>

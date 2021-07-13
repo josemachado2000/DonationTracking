@@ -24,8 +24,10 @@
 }
 /* Event */
 .benefit {
-  width: 36%;
-  margin: 20px;
+  width: 100%;
+  margin: 40px;
+  margin-top: 20px;
+  margin-bottom: 0px;
 }
 
 /* Event Card */
@@ -56,4 +58,9 @@
 .benef-benefit {
   padding: 20px;
   padding-top: 0px;
+}
+.benefitsTitle {
+  margin-top: 20px;
+  margin-left: 40px;
+  font-weight: bold;
 }

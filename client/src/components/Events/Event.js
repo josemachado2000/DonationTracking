@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import "./Events.css";
 import Card from "react-bootstrap/Card";
 import {
   faChevronCircleRight,
@@ -10,16 +11,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EventDetails from "./EventDetails";
 
-const Event = ({ event, onDonateSuccess }) => {
+const Event = ({ event, onDonateSuccess, onDonate }) => {
   const [showDonate, setShowDonate] = useState(false);
 
   return (
     <Router>
       <div className="event_eventDetails">
         <div className="event">
-          <Card>
-            <Card.Header className="cardTitle">{event.name}</Card.Header>
-            <Card.Body>
+          <Card className="event-card">
+            <Card.Header className="event-cardTitle">{event.name}</Card.Header>
+            <Card.Body className="event-cardBody">
               <Card.Text>{event.description}</Card.Text>
               {showDonate === false ? (
                 <div className="cardButton">
@@ -52,6 +53,7 @@ const Event = ({ event, onDonateSuccess }) => {
               event={event}
               component={"Event.js"}
               onDonateSuccess={onDonateSuccess}
+              onDonate={onDonate}
             />
           )}
         />

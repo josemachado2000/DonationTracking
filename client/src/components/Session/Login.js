@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import "./Session.css";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -59,14 +60,15 @@ const Login = () => {
   };
 
   return (
-    <>
-      <h3>Login</h3>
-      <Form>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Username
-          </Form.Label>
+    <div className="loginScreen">
+      <h3 className="loginTitle">Login</h3>
+      <Form className="loginForm">
+        <Form.Group as={Row} style={{ marginBottom: "10px" }}>
           <Col sm="10">
+            <Form.Label column sm="2" className="loginLabels">
+              Username
+            </Form.Label>
+
             <Form.Control
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -75,10 +77,11 @@ const Login = () => {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
-            Password
-          </Form.Label>
           <Col sm="10">
+            <Form.Label column sm="2" className="loginLabels">
+              Password
+            </Form.Label>
+
             <Form.Control
               type="password"
               value={password}
@@ -99,7 +102,7 @@ const Login = () => {
       >
         LOGIN
       </Button>
-    </>
+    </div>
   );
 };
 

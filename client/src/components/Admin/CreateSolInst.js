@@ -8,6 +8,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateSolInst = ({ onCreateSolInst }) => {
   const [name, setName] = useState("");
@@ -47,8 +49,7 @@ const CreateSolInst = ({ onCreateSolInst }) => {
           Create Solidarity Institution
         </Card.Header>
         <Card.Body>
-          <Card.Text></Card.Text>
-          <Card.Text></Card.Text>
+          <FontAwesomeIcon icon={faUser} size="10x" style={{ color: "gray" }} />
         </Card.Body>
       </Card>
 
@@ -77,7 +78,7 @@ const CreateSolInst = ({ onCreateSolInst }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Email
               </Form.Label>
@@ -90,7 +91,7 @@ const CreateSolInst = ({ onCreateSolInst }) => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
+            <Form.Group as={Row} style={{ marginTop: "10px" }}>
               <Form.Label column sm="2" style={{ fontWeight: "bold" }}>
                 Contact
               </Form.Label>
@@ -109,7 +110,7 @@ const CreateSolInst = ({ onCreateSolInst }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => createSolInst()}>
+          <Button variant="secondary" onClick={() => createSolInst()}>
             Create
           </Button>
         </Modal.Footer>

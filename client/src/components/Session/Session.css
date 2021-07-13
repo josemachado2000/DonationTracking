@@ -1,0 +1,41 @@
+.loginScreen {
+  border-radius: 20px;
+  padding: 20px;
+  background-color: lightgray;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loginForm {
+  text-align: left;
+}
+.loginTitle {
+  font-weight: bold !important;
+  padding-left: 0px !important;
+}
+.loginLabels {
+  font-weight: bold;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.signup_page {
+  border-radius: 20px;
+  padding: 30px;
+  background-color: lightgray;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.signupLabels {
+  font-weight: bold;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

@@ -18,7 +18,6 @@ const Benefits = () => {
   }, []);
 
   const fetchBenefits = async () => {
-    //const benefId = { benefId: benef.id };
     const benefId = { benefId: benef.id };
     const response = await axios.post(
       "http://localhost:8080/get_BENEFITS_by_BENEF",
@@ -30,7 +29,7 @@ const Benefits = () => {
   return (
     <>
       <div className="benefitsList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Benefits</h3>
+        <h3 className="benefitsTitle">Benefits</h3>
         {benefits.map((benefit) => (
           <Benefit key={benefit.id} benefit={benefit} />
         ))}

@@ -5,7 +5,7 @@ import SolInstEvent from "./SolInstEvent";
 
 const SolInstEvents = ({ solInst }) => {
   const [events, setEvents] = useState([]);
-  const [events1, setEvents1] = useState([]);
+  const [today] = useState(new Date());
 
   useEffect(() => {
     const getEvents = async () => {
@@ -13,12 +13,6 @@ const SolInstEvents = ({ solInst }) => {
       setEvents(events);
     };
     getEvents();
-
-    const getEvents1 = async () => {
-      const events = await fetchEvents();
-      setEvents1(events);
-    };
-    getEvents1();
   }, []);
 
   const fetchEvents = async () => {
@@ -30,32 +24,47 @@ const SolInstEvents = ({ solInst }) => {
     return response.data;
   };
 
-  const filterEvents = (array1, array2) => {
-    //console.log(array1);
-    //console.log(array2);
-    for (var ar1 of array1) {
-      for (var ar2 of array2) {
-        //console.log(ar1.oldId + "           " + ar2.id);
-        if (ar1.oldId === ar2.id) {
-          //console.log("Corta: " + ar2.id);
-          array2.splice(array2.indexOf(ar2), 1);
-          break;
-        }
-      }
+  const filteredEvents = (events) => {
+    var eventsIds = [];
+    events.forEach((e) => {
+      eventsIds.push(e.oldId);
+    });
+
+    events = events.filter(function (item) {
+      return !eventsIds.includes(item.id);
+    });
+
+    return events;
+  };
+
+  const onDonate = async (newDonation, newEventDonate) => {
+    try {
+      await axios.post("http://localhost:8080/create_DONATION", newDonation);
+      await axios.post("http://localhost:8080/create_EVENT", newEventDonate);
+      setEvents([...events, newEventDonate]);
+    } catch (e) {
+      console.log(e);
     }
-    //console.log(array2);
-    return array2;
   };
 
   return (
     <>
-      {filterEvents(events, events1).map((event) => (
-        <SolInstEvent
-          key={event.id}
-          event={event}
-          component={"SolInstEvents.js"}
-        />
-      ))}
+      {filteredEvents(events).map((event) =>
+        event.isEnabled === 1 ? (
+          new Date(event.endDate).getTime() < today.getTime() ? (
+            ""
+          ) : (
+            <SolInstEvent
+              key={event.id}
+              event={event}
+              component={"SolInstEvents.js"}
+              onDonate={onDonate}
+            />
+          )
+        ) : (
+          ""
+        )
+      )}
     </>
   );
 };

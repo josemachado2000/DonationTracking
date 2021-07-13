@@ -22,9 +22,7 @@ const SolInsts = () => {
   return (
     <>
       <div className="eventsList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>
-          Solidarity Institutions
-        </h3>
+        <h3 className="solInsts-title">Solidarity Institutions</h3>
         {solInsts.map((solInst) => (
           <SolInst key={solInst.id} solInst={solInst} />
         ))}

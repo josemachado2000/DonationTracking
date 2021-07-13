@@ -7,20 +7,36 @@
   padding: 20px;
   padding-top: 0px;
 }
+.mis-event-card {
+  width: 97.5% !important;
+  height: fit-content !important;
+}
 .events_title_addEvent {
   width: 100%;
   display: flex;
 }
 .events_title {
   padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 40px;
+  font-weight: bold;
 }
 .addEvent {
-  float: right;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+  margin-top: 20px !important;
+}
+a.addEvent {
+  text-decoration: none !important;
+  color: black !important;
 }
 
 /* AddEvent.js */
 .addEvent_page {
+  border-radius: 20px;
   position: absolute;
   top: 0;
   left: 0;
@@ -30,12 +46,15 @@
   height: fit-content;
   margin: auto;
   padding: 20px;
-  background-color: gray;
+  background-color: whitesmoke;
 }
 .cancel {
-  left: 0;
+  margin-top: 20px;
 }
-
+.add {
+  float: right;
+  margin-top: 20px;
+}
 .progress {
   height: 40px !important;
 }

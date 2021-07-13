@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,10 +10,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Donate = ({ event, onDonateSuccess }) => {
+const Donate = ({ event, onDonateSuccess, onDonate }) => {
   const [showDonate, setShowDonate] = useState(false);
   const [amount, setAmount] = useState(0);
   const [donateClick, setDonateClick] = useState("");
+  const [user] = useState(JSON.parse(localStorage.getItem("loggedUser")));
 
   const onClickDonate = () => {
     if (showDonate === false) {
@@ -38,14 +39,41 @@ const Donate = ({ event, onDonateSuccess }) => {
   };
 
   const createDonation = async (amount, date) => {
-    const newDonation = {
-      amount: amount,
-      date: date,
-      eventId: event.id,
+    var newDonation = "";
+    if (user) {
+      newDonation = {
+        amount: amount,
+        date: date,
+        eventId: event.id,
+        donorId: user.id,
+      };
+    } else {
+      newDonation = {
+        amount: amount,
+        date: date,
+        eventId: event.id,
+      };
+    }
+
+    const newEventDonate = {
+      id: uuidv4(),
+      oldId: event.id,
+      name: event.name,
+      description: event.description,
+      targetReason: event.targetReason,
+      targetAmount: event.targetAmount,
+      currentAmount: event.currentAmount + amount,
+      beginDate: event.beginDate,
+      endDate: event.endDate,
+      isEnabled: 1,
+      misId: event.misId,
+      solInstId: event.solInstId,
+      benefId: event.benefId,
+      supplCo: event.supplCo,
     };
 
     try {
-      await axios.post("http://localhost:8080/create_DONATION", newDonation);
+      onDonate(newDonation, newEventDonate);
 
       setDonateClick("");
       setAmount(0);
@@ -54,25 +82,6 @@ const Donate = ({ event, onDonateSuccess }) => {
       setTimeout(function () {
         alert(false);
       }, 3000);
-      const newEventDonate = {
-        oldId: event.id,
-        name: event.name,
-        description: event.description,
-        targetReason: event.targetReason,
-        targetAmount: event.targetAmount,
-        currentAmount: event.currentAmount + amount,
-        beginDate: event.beginDate,
-        endDate: event.endDate,
-        misId: "1a755c26-5266-496a-a8c6-59d2857e84e7",
-        solInstId: "479faaff-b3e0-4029-b58d-26d54fa72b59",
-      };
-
-      console.log(newEventDonate);
-      try {
-        await axios.post("http://localhost:8080/create_EVENT", newEventDonate);
-      } catch (e) {
-        console.log(e);
-      }
     } catch (e) {
       console.log(e);
     }

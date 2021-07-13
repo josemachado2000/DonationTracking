@@ -9,10 +9,20 @@ import Event from "./Event";
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [donationSuccess, setDonationSuccess] = useState(false);
+  const [today] = useState(new Date());
 
   const onDonateSuccess = (showAlert) => {
-    console.log(showAlert);
     setDonationSuccess(showAlert);
+  };
+
+  const onDonate = async (newDonation, newEventDonate) => {
+    try {
+      await axios.post("http://localhost:8080/create_DONATION", newDonation);
+      await axios.post("http://localhost:8080/create_EVENT", newEventDonate);
+      setEvents([...events, newEventDonate]);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -27,23 +37,6 @@ const Events = () => {
     const response = await axios.get("http://localhost:8080/get_all_EVENTS");
     return response.data;
   };
-
-  // const filterEvents = (array1, array2) => {
-  //   //console.log(array1);
-  //   //console.log(array2);
-  //   for (var ar1 of array1) {
-  //     for (var ar2 of array2) {
-  //       //console.log(ar1.oldId + "           " + ar2.id);
-  //       if (ar1.oldId === ar2.id) {
-  //         //console.log("Corta: " + ar2.id);
-  //         array2.splice(array2.indexOf(ar2), 1);
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   //console.log(array2);
-  //   return array2;
-  // };
 
   const filteredEvents = (events) => {
     var eventsIds = [];
@@ -67,14 +60,23 @@ const Events = () => {
         ""
       )}
       <div className="eventsList">
-        <h3 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Events</h3>
-        {filteredEvents(events).map((event) => (
-          <Event
-            key={event.id}
-            event={event}
-            onDonateSuccess={onDonateSuccess}
-          />
-        ))}
+        <h3 className="eventsTitle">Events</h3>
+        {filteredEvents(events).map((event) =>
+          event.isEnabled === 1 ? (
+            new Date(event.endDate).getTime() < today.getTime() ? (
+              ""
+            ) : (
+              <Event
+                key={event.id}
+                event={event}
+                onDonateSuccess={onDonateSuccess}
+                onDonate={onDonate}
+              />
+            )
+          ) : (
+            ""
+          )
+        )}
       </div>
     </>
   );

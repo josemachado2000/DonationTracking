@@ -1,85 +1,52 @@
-import { v4 as uuidv4 } from "uuid";
-
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
+import {
+  faEnvelopeSquare,
+  faHandHoldingHeart,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MisList = ({ mis, solInsts, onDisableMis, onEnableMis }) => {
-  const disableMis = (mis) => {
-    console.log(mis);
-    const newMis = {
-      id: uuidv4(),
-      oldId: mis.id,
-      username: mis.username,
-      password: mis.password,
-      name: mis.name,
-      email: mis.email,
-      address: mis.address,
-      contact: mis.contact,
-      isEnabled: 0,
-      solInstId: mis.solInstId,
-    };
-
-    console.log(newMis);
-    onDisableMis(newMis);
-  };
-
-  const enableMis = (mis) => {
-    const newMis = {
-      id: uuidv4(),
-      oldId: mis.id,
-      username: mis.username,
-      password: mis.password,
-      name: mis.name,
-      email: mis.email,
-      address: mis.address,
-      contact: mis.contact,
-      isEnabled: 1,
-      solInstId: mis.solInstId,
-    };
-
-    onEnableMis(newMis);
-  };
-
+const MisList = ({ mis, solInsts }) => {
   return (
     <>
       <ListGroup as="ul">
         {mis.length === 0
-          ? "No"
-          : mis.map((mis) =>
-              mis.isEnabled === 1 ? (
-                <>
-                  <ListGroup.Item as="li" key={mis.id}>
-                    Name: {mis.name} <br />
-                    Solidarity Institution:
-                    {solInsts.map((inst) =>
-                      inst.id === mis.solInstId ? " " + inst.name : ""
-                    )}
-                    <br />
-                    Email: {mis.email} <br />
-                    Contact: {mis.contact} <br />
-                  </ListGroup.Item>
-                  <Button variant="primary" onClick={() => disableMis(mis)}>
-                    Disable
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <ListGroup.Item as="li" key={mis.id} disabled>
-                    Name: {mis.name} <br />
-                    Solidarity Institution:
-                    {solInsts.map((inst) =>
-                      inst.id === mis.solInstId ? " " + inst.name : ""
-                    )}
-                    <br />
-                    Email: {mis.email} <br />
-                    Contact: {mis.contact} <br />
-                  </ListGroup.Item>
-                  <Button variant="primary" onClick={() => enableMis(mis)}>
-                    Enable
-                  </Button>
-                </>
-              )
-            )}
+          ? "There are no Members of Solidarity Institution"
+          : mis.map((mis) => (
+              <ListGroup.Item as="li" key={mis.id}>
+                <h4 style={{ fontWeight: "bold" }}>{mis.name}</h4>
+                {solInsts.map((inst) =>
+                  inst.id === mis.solInstId ? (
+                    <h5>
+                      <FontAwesomeIcon
+                        icon={faHandHoldingHeart}
+                        size="md"
+                        style={{ color: "gray" }}
+                      />
+                      {" " + inst.name}
+                    </h5>
+                  ) : (
+                    ""
+                  )
+                )}
+                <h5>
+                  <FontAwesomeIcon
+                    icon={faEnvelopeSquare}
+                    size="lg"
+                    style={{ color: "gray" }}
+                  />
+                  {" " + mis.email}
+                </h5>
+                <h5>
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    size="md"
+                    style={{ color: "gray" }}
+                  />
+                  {" " + mis.contact}
+                </h5>
+              </ListGroup.Item>
+            ))}
       </ListGroup>
     </>
   );
