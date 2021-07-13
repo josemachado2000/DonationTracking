@@ -1,0 +1,114 @@
+/* Event List */
+.eventsList {
+  width: 100%;
+}
+.eventsTitle {
+  margin-left: 40px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+/* Event-EventDetails */
+.event_eventDetails {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowwrap;
+}
+/* Event Details */
+.eventDetails {
+  width: 60%;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event Details */
+.solInst_eventDetails {
+  width: 100%;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event */
+.event {
+  width: 36%;
+  margin: 20px;
+}
+
+/* Event Card */
+.event-card {
+  font-size: 18px !important;
+  margin: 20px !important;
+  margin-top: 0px !important;
+  width: 96% !important;
+  height: fit-content !important;
+}
+.event-cardBody {
+  width: 100%;
+}
+.event-cardTitle {
+  font-size: 20px !important;
+  font-weight: bold;
+}
+.cardButton {
+  float: right;
+}
+
+.form-group.col,
+.form-group.row {
+  margin-bottom: 0px;
+}
+.form-label.col-form-label.col-sm-10 {
+  padding-bottom: 0px;
+}
+.btn.btn-primary {
+  margin-top: 10px;
+  float: right;
+}
+.buttonDonate {
+  margin-top: 20px;
+  float: right;
+}
+.donateSection {
+  display: flex;
+  flex-direction: column;
+}
+.donateValues {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.donateValue {
+  font-weight: bold;
+  text-align: center;
+  width: 15%;
+  height: 35px;
+  background-color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.donateValueClicked {
+  font-weight: bold;
+  text-align: center;
+  width: 15%;
+  height: 35px;
+  background-color: gray;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.alert {
+  position: absolute !important;
+  top: 20;
+  right: 0;
+  width: fit-content;
+}
+
+input {
+  width: auto !important;
+  border-radius: 10px !important;
+  padding: 5px !important;
+  background-color: rgb(233, 233, 233) !important;
+}
+textarea {
+  border-radius: 10px !important;
+  padding: 5px !important;
+  background-color: rgb(233, 233, 233) !important;
+}

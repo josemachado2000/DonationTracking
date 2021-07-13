@@ -1,0 +1,67 @@
+/* Event List */
+.invoiceList {
+  width: 100%;
+}
+/* Event-EventDetails */
+.invoice_invoiceDetails {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowwrap;
+}
+/* Event Details */
+.invoiceDetails {
+  width: 60%;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  background-color: lightgray;
+}
+/* Event Details */
+.supplco_invoiceDetails {
+  width: 100%;
+}
+/* Event */
+.invoice {
+  margin: 20px;
+}
+
+/* Event Card */
+.cardTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+.cardButton {
+  float: right;
+}
+
+.form-group.col,
+.form-group.row {
+  margin-bottom: 0px;
+}
+.form-label.col-form-label.col-sm-10 {
+  padding-bottom: 0px;
+}
+.btn.btn-primary {
+  margin-top: 10px;
+  float: right;
+}
+
+.supplco {
+  width: 100%;
+  padding: 20px;
+}
+.supplco-invoice {
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.invoice-card {
+  width: 97.5% !important;
+}
+.invoice-card-body {
+  align-self: auto;
+  height: 300px !important;
+}
+.order-card-title {
+  font-size: 18px !important;
+}

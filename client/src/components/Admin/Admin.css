@@ -1,0 +1,35 @@
+.create_section {
+  display: flex;
+  margin: 20px;
+  margin-bottom: 0px;
+}
+.list_section {
+  display: flex;
+  margin: 20px;
+  margin-top: 0px;
+}
+.card {
+  font-size: 20px;
+  margin: 20px;
+  width: 50%;
+  height: 300px;
+  cursor: "pointer";
+}
+.cardTitle {
+  font-size: 22px !important;
+}
+.card-body {
+  align-self: center;
+}
+h5 {
+  font-size: 18px !important;
+}
+.list-group {
+  font-size: 18px;
+  margin: 20px;
+  width: 50%;
+  height: 300px;
+}
+.modal-dialog {
+  max-width: 1000px !important;
+}

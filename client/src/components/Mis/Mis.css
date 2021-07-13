@@ -1,0 +1,65 @@
+/* MisEvents.js */
+.mis {
+  width: 100%;
+  padding: 20px;
+}
+.mis-events {
+  padding: 20px;
+  padding-top: 0px;
+}
+.mis-event-card {
+  width: 97.5% !important;
+  height: fit-content !important;
+}
+.events_title_addEvent {
+  width: 100%;
+  display: flex;
+}
+.events_title {
+  padding-top: 20px;
+  padding-left: 40px;
+  font-weight: bold;
+}
+.addEvent {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  right: 0;
+  margin-right: 55px;
+  margin-top: 20px !important;
+}
+a.addEvent {
+  text-decoration: none !important;
+  color: black !important;
+}
+
+/* AddEvent.js */
+.addEvent_page {
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  height: fit-content;
+  margin: auto;
+  padding: 20px;
+  background-color: whitesmoke;
+}
+.cancel {
+  margin-top: 20px;
+}
+.add {
+  float: right;
+  margin-top: 20px;
+}
+.progress {
+  height: 40px !important;
+}
+.progress-bar {
+  font-weight: bold !important;
+  font-size: 16px;
+  background-color: rgb(59, 59, 59) !important;
+}
